@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Πρωτομαγιά στις Πρέσπες — Travel Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Cinzel:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+
+<script>
+const IMAGES = {
+  hero:   "https://live.staticflickr.com/65535/55288684623_66b03bcb13_b.jpg",
+  intro:  "https://live.staticflickr.com/65535/55288928300_016e34190e_b.jpg",
+  lynx:   "https://live.staticflickr.com/65535/55288928285_70b7109e71_b.jpg",
+  wolf:   "PHOTO_WOLF",
+  zazari: "PHOTO_ZAZARI",
+  thomas: "PHOTO_THOMAS",
+  florina:"PHOTO_FLORINA",
+  prespa1:"PHOTO_PRESPA1",
+  prespa2:"PHOTO_PRESPA2",
+  psarades:"PHOTO_PSARADES",
+  naoumidis:"PHOTO_NAOUMIDIS",
+  edessa: "PHOTO_EDESSA",
+  g1:"https://live.staticflickr.com/65535/55288928285_70b7109e71_b.jpg",
+  g2:"PHOTO_G2", g3:"PHOTO_G3", g4:"PHOTO_G4",
+  g5:"PHOTO_G5", g6:"PHOTO_G6", g7:"PHOTO_G7",
+  g8:"PHOTO_G8", g9:"PHOTO_G9",
+};
+const SHORTS = {
+  lynx:"rzyAuD9x5V0", wolf:"IEqU61apyfA",
+  florina1:"vt5ArtXgApg", florina2:"MGgBJatJbzg",
+  zazari:"46VzbC4NPhI", train:"c4Lz4-S-5kU",
+  psarades:"lFahPEgs51E", psarades2:"XXC2WU_tJd4",
+  achilleios1:"g8wFvdmNPwY", achilleios2:"LV5vd0M7WKw",
+  germanos:"WXM4B5oiBXY",
+};
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-img]").forEach(el => {
+    const k = el.getAttribute("data-img");
+    if (IMAGES[k] && !IMAGES[k].startsWith("PHOTO_")) {
+      if (el.tagName === "IMG") el.src = IMAGES[k];
+      else el.style.backgroundImage = `url('${IMAGES[k]}')`;
+    }
+  });
+  document.querySelectorAll("[data-short]").forEach(wrap => {
+    const id = SHORTS[wrap.getAttribute("data-short")];
+    if (id) wrap.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&playsinline=1" allowfullscreen allow="autoplay;encrypted-media"></iframe>`;
+  });
+});
+</script>
+
+<style>
+:root {
+  --cu:    #B87333;
+  --cu-l:  #D4956A;
+  --cu-d:  #7A4E22;
+  --ink:   #0D1117;
+  --ink-s: #141B24;
+  --ink-m: #1C2430;
+  --cream: #E8ECF0;
+  --cr-d:  #B0BECB;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--cream);font-family:'Source Sans 3',sans-serif;font-weight:300;overflow-x:hidden;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--ink);}
+::-webkit-scrollbar-thumb{background:var(--cu-d);border-radius:2px;}
+
+/* NAV */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;transition:background .4s,padding .4s;}
+#navbar.scrolled{background:rgba(13,17,23,.96);backdrop-filter:blur(12px);padding:.75rem 2.5rem;border-bottom:1px solid rgba(184,115,51,.15);}
+.nav-logo{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.35em;color:var(--cu);text-decoration:none;text-transform:uppercase;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cr-d);text-decoration:none;transition:color .25s;}
+.nav-links a:hover{color:var(--cu);}
+@media(max-width:680px){.nav-links{display:none;}}
+
+/* HERO */
+#hero{position:relative;height:100vh;min-height:680px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 40%;filter:brightness(.22) saturate(.65);transform:scale(1.06);animation:hZ 20s ease-in-out infinite alternate;}
+@keyframes hZ{from{transform:scale(1.06);}to{transform:scale(1.13);}}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,17,23,.35) 0%,rgba(13,17,23,0) 40%,rgba(13,17,23,0) 55%,rgba(13,17,23,.97) 100%);}
+.hero-content{position:relative;text-align:center;padding:0 2rem;}
+@keyframes fUp{from{opacity:0;transform:translateY(36px);}to{opacity:1;transform:translateY(0);}}
+.hero-kicker{font-family:'Cinzel',serif;font-size:clamp(.56rem,1.2vw,.74rem);letter-spacing:.42em;color:var(--cu);text-transform:uppercase;margin-bottom:1.8rem;opacity:0;animation:fUp 1s .3s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.8rem,9vw,6.8rem);line-height:.9;color:#fff;margin-bottom:.4rem;opacity:0;animation:fUp 1.2s .5s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-title em{font-style:italic;color:var(--cu-l);}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.9rem,2.5vw,1.35rem);color:var(--cr-d);margin-top:1.2rem;margin-bottom:2.5rem;opacity:0;animation:fUp 1.2s .8s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-line{width:70px;height:1px;background:var(--cu);margin:0 auto 2rem;opacity:0;animation:fUp 1s 1s cubic-bezier(.16,1,.3,1) forwards;}
+.hero-meta{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fUp 1s 1.2s cubic-bezier(.16,1,.3,1) forwards;}
+.hmi{font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.18em;color:var(--cr-d);text-transform:uppercase;}
+.hmi span{display:block;color:var(--cu);font-size:.56rem;letter-spacing:.15em;margin-bottom:4px;}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fUp 1s 2s ease forwards;}
+.hs-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--cu));animation:sP 2s ease-in-out infinite;}
+@keyframes sP{0%,100%{opacity:.4;}50%{opacity:1;}}
+.hs-text{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.3em;color:var(--cu-d);text-transform:uppercase;}
+
+/* COMMONS */
+section{padding:6rem 0;}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.sl{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.42em;color:var(--cu);text-transform:uppercase;margin-bottom:.9rem;display:flex;align-items:center;gap:1rem;}
+.sl::before{content:'';display:inline-block;width:26px;height:1px;background:var(--cu);}
+.sl.center{justify-content:center;}
+.sl.center::before{display:none;}
+.st{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,5vw,3.3rem);line-height:1.05;color:#fff;margin-bottom:1.8rem;}
+.st em{font-style:italic;color:var(--cu-l);}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.12s;}.d2{transition-delay:.25s;}.d3{transition-delay:.38s;}.d4{transition-delay:.5s;}
+
+/* INTRO */
+#intro{background:var(--ink-s);}
+.intro-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start;}
+@media(max-width:900px){.intro-grid{grid-template-columns:1fr;gap:3rem;}}
+.intro-text p{font-size:1rem;line-height:1.9;color:var(--cr-d);margin-bottom:1.3rem;}
+.intro-text p strong{color:var(--cu-l);font-weight:600;}
+.intro-pull{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.2rem,2.5vw,1.6rem);color:#fff;line-height:1.5;border-left:2px solid var(--cu);padding-left:1.5rem;margin:2.2rem 0;}
+.intro-image{position:relative;}
+.intro-image img{width:100%;height:clamp(250px,35vw,460px);object-fit:cover;display:block;}
+.intro-image::after{content:'';position:absolute;top:12px;right:-12px;bottom:-12px;left:12px;border:1px solid var(--cu-d);z-index:-1;}
+
+/* STATS */
+#stats{background:var(--cu);padding:4rem 0;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center;}
+@media(max-width:600px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2.6rem,6vw,4.5rem);font-weight:600;color:var(--ink);line-height:1;display:block;}
+.stat-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.2em;color:rgba(13,17,23,.65);text-transform:uppercase;margin-top:.4rem;display:block;}
+
+/* ═══════════════════════════════════
+   STOP SECTION — κάθε στάση
+═══════════════════════════════════ */
+.stop-section{padding:0;}
+.stop-section:nth-child(odd){background:var(--ink-s);}
+.stop-section:nth-child(even){background:var(--ink-m);}
+
+.stop-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;min-height:520px;}
+.stop-section.reverse .stop-inner{direction:rtl;}
+.stop-section.reverse .stop-inner > *{direction:ltr;}
+@media(max-width:900px){
+  .stop-inner,.stop-section.reverse .stop-inner{grid-template-columns:1fr;direction:ltr;}
+}
+
+/* Media column */
+.stop-media{position:relative;min-height:380px;overflow:hidden;}
+.stop-media img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.8);transition:filter .6s;}
+.stop-media:hover img{filter:brightness(.95);}
+.stop-day-badge{position:absolute;top:1.5rem;left:1.5rem;background:rgba(13,17,23,.8);backdrop-filter:blur(8px);border:1px solid rgba(184,115,51,.3);padding:.4rem 1rem;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.25em;color:var(--cu);text-transform:uppercase;}
+.stop-time-badge{position:absolute;bottom:1.5rem;left:1.5rem;background:var(--cu);padding:.3rem .9rem;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.2em;color:var(--ink);text-transform:uppercase;font-weight:600;}
+
+/* Short phone inside media */
+.stop-phone-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--ink);}
+.stop-phone{width:min(220px, 55%);aspect-ratio:9/16;background:#0A0E14;border-radius:32px;border:2px solid rgba(184,115,51,.3);box-shadow:0 24px 60px rgba(0,0,0,.7);overflow:hidden;position:relative;}
+.stop-phone::before{content:'';position:absolute;top:9px;left:50%;transform:translateX(-50%);width:50px;height:5px;background:var(--ink-m);border-radius:3px;z-index:10;}
+.stop-phone .sw{position:absolute;inset:0;}
+.stop-phone .sw iframe{width:100%;height:100%;border:none;}
+.stop-phone .sph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7rem;color:var(--cu-d);}
+.stop-phone .sph .phi{width:44px;height:44px;border:1px solid var(--cu-d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.stop-phone .sph .pht{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.22em;text-transform:uppercase;text-align:center;padding:0 .8rem;}
+
+/* dual media: photo + phone side by side */
+.stop-media.dual{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.stop-media.dual .stop-photo{position:relative;overflow:hidden;}
+.stop-media.dual .stop-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);}
+.stop-media.dual .stop-phone-col{background:var(--ink);display:flex;align-items:center;justify-content:center;padding:2rem 1.5rem;}
+
+/* Info column */
+.stop-info{padding:3.5rem 3rem;display:flex;flex-direction:column;justify-content:center;}
+@media(max-width:900px){.stop-info{padding:2.5rem 2rem;}}
+.stop-num{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;color:rgba(184,115,51,.08);line-height:1;margin-bottom:-.5rem;}
+.stop-tag{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.35em;color:var(--cu);text-transform:uppercase;margin-bottom:.6rem;}
+.stop-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.7rem,3.5vw,2.6rem);color:#fff;line-height:1.1;margin-bottom:.8rem;}
+.stop-title em{font-style:italic;color:var(--cu-l);}
+.stop-desc{font-size:.97rem;color:var(--cr-d);line-height:1.8;margin-bottom:1.4rem;}
+.stop-desc strong{color:var(--cu-l);font-weight:600;}
+
+/* Info pills */
+.stop-pills{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.4rem;}
+.pill{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;padding:.3rem .8rem;border:1px solid rgba(184,115,51,.3);color:var(--cr-d);}
+.pill.cu{border-color:var(--cu);color:var(--cu);}
+
+/* Info rows */
+.stop-details{display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(184,115,51,.1);}
+.stop-detail{display:flex;align-items:flex-start;gap:1rem;padding:.75rem 0;border-bottom:1px solid rgba(184,115,51,.07);}
+.sd-icon{font-size:1rem;flex-shrink:0;margin-top:.05rem;opacity:.7;}
+.sd-label{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.2em;color:var(--cu-d);text-transform:uppercase;margin-bottom:.2rem;}
+.sd-val{font-size:.9rem;color:var(--cr-d);line-height:1.5;}
+.sd-val a{color:var(--cu);text-decoration:none;}
+.sd-val a:hover{text-decoration:underline;}
+
+/* Fun fact inside stop */
+.stop-fact{background:rgba(184,115,51,.06);border-left:2px solid var(--cu);padding:1rem 1.2rem;margin-top:1.2rem;}
+.sf-label{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.28em;color:var(--cu);text-transform:uppercase;margin-bottom:.4rem;}
+.sf-text{font-size:.88rem;color:var(--cr-d);line-height:1.7;}
+.sf-text strong{color:var(--cu-l);}
+
+/* GALLERY */
+#gallery{background:var(--ink);padding:0;}
+.gallery-header{padding:5rem 2rem 3rem;max-width:1100px;margin:0 auto;}
+.gallery-mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+.gitem:nth-child(1){grid-column:span 2;}
+.gitem:nth-child(5){grid-column:span 2;}
+@media(max-width:700px){.gallery-mosaic{grid-template-columns:1fr 1fr;}.gitem:nth-child(1),.gitem:nth-child(5){grid-column:span 1;}}
+.gitem{overflow:hidden;cursor:pointer;position:relative;min-height:190px;}
+.gitem img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.16,1,.3,1),filter .5s;filter:brightness(.75) saturate(.85);}
+.gitem:hover img{transform:scale(1.07);filter:brightness(.95) saturate(1);}
+.gio{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,17,23,.65) 0%,transparent 55%);opacity:0;transition:opacity .4s;}
+.gitem:hover .gio{opacity:1;}
+
+/* LIGHTBOX */
+#lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.94);align-items:center;justify-content:center;backdrop-filter:blur(8px);}
+#lightbox.active{display:flex;animation:lbIn .3s ease;}
+@keyframes lbIn{from{opacity:0;}to{opacity:1;}}
+#lightbox-img{max-width:88vw;max-height:88vh;object-fit:contain;border:1px solid rgba(184,115,51,.2);animation:lbZ .35s cubic-bezier(.16,1,.3,1);}
+@keyframes lbZ{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+#lightbox-close{position:absolute;top:1.5rem;right:2rem;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;color:var(--cu);cursor:pointer;text-transform:uppercase;border:1px solid var(--cu-d);padding:.5rem 1.2rem;transition:background .2s;z-index:10000;}
+#lightbox-close:hover{background:rgba(184,115,51,.15);}
+#lightbox-prev,#lightbox-next{position:absolute;top:50%;transform:translateY(-50%);font-size:2.2rem;color:var(--cu);cursor:pointer;padding:1rem 1.5rem;opacity:.6;transition:opacity .2s;z-index:10000;user-select:none;}
+#lightbox-prev:hover,#lightbox-next:hover{opacity:1;}
+#lightbox-prev{left:.5rem;}#lightbox-next{right:.5rem;}
+#lightbox-counter{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.3em;color:var(--cu-d);}
+
+/* FOOTER */
+footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding:3rem 2rem;text-align:center;}
+.footer-logo{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:var(--cu);text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:center;gap:1rem;}
+.footer-logo::before,.footer-logo::after{content:'';display:inline-block;width:36px;height:1px;background:var(--cu-d);}
+.footer-copy{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.18em;color:rgba(255,255,255,.2);text-transform:uppercase;margin-top:.8rem;}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a class="nav-logo" href="#">Πρωτομαγιά 2025</a>
+  <ul class="nav-links">
+    <li><a href="#stop-wolf">Αρκτούρος</a></li>
+    <li><a href="#stop-zazari">Ζαζάρη</a></li>
+    <li><a href="#stop-thomas">Θωμάς</a></li>
+    <li><a href="#stop-florina">Φλώρινα</a></li>
+    <li><a href="#stop-prespa">Πρέσπες</a></li>
+    <li><a href="#stop-psarades">Ψαράδες</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg" data-img="hero"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-content">
+    <p class="hero-kicker">1–2 Μαΐου 2025 · Δυτική Μακεδονία</p>
+    <h1 class="hero-title">Πρωτομαγιά<br>στις <em>Πρέσπες</em></h1>
+    <p class="hero-sub">Ένας πλήρης οδηγός για τη διαδρομή</p>
+    <div class="hero-line"></div>
+    <div class="hero-meta">
+      <div class="hmi"><span>Αναχώρηση</span>Θεσσαλονίκη</div>
+      <div class="hmi"><span>Διανυκτέρευση</span>Βεύη</div>
+      <div class="hmi"><span>Απόσταση</span>~650 χλμ.</div>
+      <div class="hmi"><span>Στάσεις</span>7 προορισμοί</div>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="hs-line"></div><span class="hs-text">Scroll</span></div>
+</section>
+
+<!-- INTRO -->
+<section id="intro">
+  <div class="container">
+    <div class="intro-grid">
+      <div class="intro-text reveal">
+        <p class="sl">Η Ιδέα</p>
+        <h2 class="st">Δύο μέρες που<br><em>αλλάζουν κάτι</em></h2>
+        <p>Η Δυτική Μακεδονία είναι ένας από τους πιο υποτιμημένους προορισμούς της Ελλάδας. <strong>Λύγκες, βυζαντινά ερημητήρια, λίμνες που παγώνουν τον χειμώνα</strong> — κι ένα φαγητό στο Σκλήθρο που θυμάσαι χρόνια.</p>
+        <div class="intro-pull">«Αυτός ο οδηγός φτιάχτηκε για να τον πάρεις μαζί σου.»</div>
+        <p>Κάθε στάση έχει ό,τι χρειάζεσαι: <strong>ωράρια, τιμές, τηλέφωνα, ιστορικό και fun facts</strong>. Απλώς κατεβάζεις την ιστοσελίδα offline και ξεκινάς.</p>
+      </div>
+      <div class="intro-image reveal d2">
+        <img data-img="intro" src="" alt="Σακουλέβας Φλώρινα" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="reveal"><span class="stat-num">650</span><span class="stat-label">Χιλιόμετρα</span></div>
+      <div class="reveal d1"><span class="stat-num">7</span><span class="stat-label">Στάσεις</span></div>
+      <div class="reveal d2"><span class="stat-num">3</span><span class="stat-label">Χώρες Τριεθνές</span></div>
+      <div class="reveal d3"><span class="stat-num">380</span><span class="stat-label">Είδη Πτηνών</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     ΣΤΑΣΕΙΣ
+══════════════════════════════════════════ -->
+
+<!-- 1. ΑΡΚΤΟΥΡΟΣ -->
+<div class="stop-section" id="stop-wolf">
+  <div class="stop-inner">
+    <div class="stop-media dual">
+      <div class="stop-photo">
+        <img data-img="lynx" src="" alt="Λύγκας Αρκτούρος">
+        <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
+        <div class="stop-time-badge">~10:30 πμ</div>
+      </div>
+      <div class="stop-phone-col">
+        <div class="stop-phone">
+          <div class="sw" data-short="lynx"><div class="sph"><div class="phi">▶</div><div class="pht">Λύγκας</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">01</div>
+      <div class="stop-tag">Αγραπιδιές · Αμύνταιο</div>
+      <h2 class="stop-title">Αρκτούρος —<br><em>Καταφύγιο Λύκου & Λύγκα</em></h2>
+      <p class="stop-desc">Μέσα σε <strong>70 στρέμματα φυσικού δάσους βελανιδιάς</strong>, λύκοι και ευρασιατικοί λύγκες που διασώθηκαν από παράνομη αιχμαλωσία ζουν στο μοναδικό καταφύγιο του είδους στην Ελλάδα. Αν είσαι τυχερός θα τους δεις από κοντά — εκείνοι θα σε έχουν μυριστεί πολύ πριν τους δεις εσύ.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Σαβ/κο 10:00-16:30</span>
+        <span class="pill">6€ ενήλικες</span>
+        <span class="pill">4€ παιδιά 3-12</span>
+        <span class="pill">Δωρεάν &lt;3 ετών</span>
+        <span class="pill">Ξενάγηση ανά ώρα</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📍</span>
+          <div><div class="sd-label">Διεύθυνση</div><div class="sd-val">Αγραπιδιές, Δ. Αμυνταίου — 14χλμ. από Νυμφαίο</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">📞</span>
+          <div><div class="sd-label">Τηλέφωνο & Site</div><div class="sd-val"><a href="tel:+302385022210">2385 022210</a> · <a href="https://arcturos.gr" target="_blank">arcturos.gr</a></div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">⚠️</span>
+          <div><div class="sd-label">Σημαντικό</div><div class="sd-val">Τελευταία ξενάγηση 16:30 · Κατοικίδια δεν επιτρέπονται · Ορειβατικά παπούτσια συνιστώνται</div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Ο λύγκας <strong>δεν υπάρχει πλέον ελεύθερος στην Ελλάδα</strong> — ο τελευταίος εντοπίστηκε στη Β. Μακεδονία δεκαετίες πριν. Αυτά τα άτομα είναι οι μοναδικοί που ζουν σε ελληνικό έδαφος.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. ΖΑΖΑΡΗ -->
+<div class="stop-section reverse" id="stop-zazari">
+  <div class="stop-inner">
+    <div class="stop-media">
+      <img data-img="zazari" src="" alt="Λίμνη Ζαζάρη">
+      <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
+      <div class="stop-time-badge">~12:00 μμ</div>
+      <div class="stop-phone-wrap" style="position:absolute;bottom:1rem;right:1rem;width:110px;height:195px;inset:auto;">
+        <div class="stop-phone" style="width:110px;">
+          <div class="sw" data-short="zazari"><div class="sph"><div class="phi" style="width:32px;height:32px;font-size:.8rem;">▶</div><div class="pht">Ζαζάρη</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">02</div>
+      <div class="stop-tag">Λιμνοχώρι · Αμύνταιο</div>
+      <h2 class="stop-title">Λίμνη <em>Ζαζάρη</em><br>— ο καθρέφτης</h2>
+      <p class="stop-desc">Άγνωστη, μικρή, <strong>τελείως αναλλοίωτη</strong>. Η Ζαζάρη βρίσκεται σε υψόμετρο 600μ. και έχει έκταση μόλις 2 τ.χλμ. — αλλά το τοπίο γύρω της είναι από τα πιο φωτογενή της Β. Ελλάδας. Τον χειμώνα παγώνει. Τον Μάιο αντικατοπτρίζει τον ουρανό σαν καθρέφτης.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Ελεύθερη είσοδος</span>
+        <span class="pill">Υψ. 600μ.</span>
+        <span class="pill">Γύρος λίμνης 8χλμ.</span>
+        <span class="pill">Παρατήρηση πτηνών</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📍</span>
+          <div><div class="sd-label">Πρόσβαση</div><div class="sd-val">Από Αγραπιδιές: ~15χλμ. μέσω Αετού → Λιμνοχώρι. Dirt road στην όχθη.</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🐦</span>
+          <div><div class="sd-label">Χλωρίδα & Πανίδα</div><div class="sd-val">Χρυσαετός, θαλασσαετός, αετογερακίνα, ερωδιοί — συν σαλαμάνδρες και βαλτοχελώνες</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🚲</span>
+          <div><div class="sd-label">Δραστηριότητες</div><div class="sd-val">Γύρος λίμνης πεζή ή με ποδήλατο · Ποδηλασία βουνού · Ιππασία (κατόπιν κράτησης)</div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Το όνομα «Ζαζάρη» προήλθε από το <strong>επώνυμο του πρώτου ιδιοκτήτη της</strong>. Άλλες ονομασίες: «Λίμνη Λιμνοχωρίου» και «Μικρολίμνη». Χωρίζεται από τη Χειμαδίτιδα μόνο από μια λωρίδα γης 2χλμ.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. ΘΩΜΑΣ -->
+<div class="stop-section" id="stop-thomas">
+  <div class="stop-inner">
+    <div class="stop-media">
+      <img data-img="thomas" src="" alt="Ταβέρνα Θωμάς Σκλήθρο">
+      <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
+      <div class="stop-time-badge">13:30 μμ · Κράτηση ✓</div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">03</div>
+      <div class="stop-tag">Σκλήθρο · 18ο χλμ. Αμυνταίου–Καστοριάς</div>
+      <h2 class="stop-title">Restaurant <em>Thomas</em><br>— το γεύμα της εκδρομής</h2>
+      <p class="stop-desc">Από το 1970 οικογενειακή επιχείρηση — <strong>τρίτη γενιά</strong> στην κουζίνα. Τοπικά προϊόντα από δικούς παραγωγούς, ντόπια τυριά, κρασιά Αμυνταίου. Η ταβέρνα του Θωμά ήταν λόγος ταξιδιού από μόνη της πριν οι Πρέσπες γίνουν trend.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Δευτ. Κλειστό</span>
+        <span class="pill">Τρ–Σαβ 13:00–22:00</span>
+        <span class="pill">Κυρ 13:00–21:00</span>
+        <span class="pill">4.8★ / 4.300+ κριτικές</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📞</span>
+          <div><div class="sd-label">Κράτηση</div><div class="sd-val"><a href="tel:+302386031206">2386 031206</a> · <a href="https://www.agonari.gr/thomas" target="_blank">agonari.gr/thomas</a></div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🍽️</span>
+          <div><div class="sd-label">Κουζίνα</div><div class="sd-val">Σύγχρονη Ελληνική · Κρεατικά · Τοπικά τυριά · Χειροποίητα γλυκά · Κρασιά Αμυνταίου ΠΟΠ</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🏨</span>
+          <div><div class="sd-label">Σημείωση</div><div class="sd-val">Απέναντι ο ξενώνας «Αγκωνάρι» της ίδιας ιδιοκτησίας · Εξωτερικά τραπέζια · Άκαπνο</div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Το Σκλήθρο είναι χτισμένο σε υψόμετρο <strong>682μ. στη συμβολή 3 ποταμών</strong>, στη σκιά του Βίτσι. Φημίζεται για τις «πατάτες Σκλήθρου» — από τα καλύτερα αμυλούχα προϊόντα της Μακεδονίας.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. ΦΛΩΡΙΝΑ -->
+<div class="stop-section reverse" id="stop-florina">
+  <div class="stop-inner">
+    <div class="stop-media dual">
+      <div class="stop-photo">
+        <img data-img="florina" src="" alt="Φλώρινα Σακουλέβας">
+        <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
+        <div class="stop-time-badge">~17:00 μμ</div>
+      </div>
+      <div class="stop-phone-col">
+        <div class="stop-phone">
+          <div class="sw" data-short="florina1"><div class="sph"><div class="phi">▶</div><div class="pht">Σακουλέβας</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">04</div>
+      <div class="stop-tag">Φλώρινα · Παλιά Πόλη</div>
+      <h2 class="stop-title">Φλώρινα —<br><em>η πόλη των ζωγράφων</em></h2>
+      <p class="stop-desc">Νεοκλασικά αρχοντικά, <strong>παραποτάμιος δρόμος Σακουλέβα</strong>, εργαστήρια ζωγράφων, Μουσείο Σύγχρονης Τέχνης με 600+ έργα. Μια πόλη που ανακαλύπτεις ότι έπρεπε να έχεις επισκεφθεί χρόνια πριν.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Ελεύθερη βόλτα</span>
+        <span class="pill">Πεζόδρομος Μελά</span>
+        <span class="pill">Αρχαιολ. Μουσείο</span>
+        <span class="pill">Σαρακατσάνικη Αγορά</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">🏛️</span>
+          <div><div class="sd-label">Αρχαιολογικό Μουσείο</div><div class="sd-val">Δευτ. Κλειστό · Τρ–Κυρ 08:30–15:30 · Δωρεάν είσοδος Κυριακές</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🛍️</span>
+          <div><div class="sd-label">Τι να αγοράσεις</div><div class="sd-val">Πιπεριές Φλώρινης ΠΟΠ · Χειροποίητα κεριά · Τοπικά τυριά · Τσάι Βίτσι</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">☕</span>
+          <div><div class="sd-label">Καφές</div><div class="sd-val">Πεζόδρομος Μελά — κεντρικός δρόμος με πολλές επιλογές café</div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Η Φλώρινα έχει δώσει <strong>δεκάδες σημαντικούς Έλληνες ζωγράφους</strong> αναλογικά με τον πληθυσμό της — μεταξύ αυτών ο αφαιρετιστής Αλέκος Κοντόπουλος (1905–1975). Το Μουσείο Σύγχρονης Τέχνης στο σταθμό τρένου αξίζει.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. ΒΕΥΗ - Διανυκτέρευση -->
+<div class="stop-section" id="stop-vevi" style="padding:3rem 0;">
+  <div class="container">
+    <div class="reveal" style="display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:center;border:1px solid rgba(184,115,51,.2);padding:2rem 2.5rem;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;color:rgba(184,115,51,.15);line-height:1;">🌙</div>
+      <div>
+        <div class="stop-tag" style="margin-bottom:.4rem;">Διανυκτέρευση · Βεύη</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#fff;margin-bottom:.5rem;">Suite Rooms Fine Living VEVI</h3>
+        <p style="font-size:.9rem;color:var(--cr-d);line-height:1.7;margin-bottom:.8rem;">Βαθμολογία Booking: <strong style="color:var(--cu-l);">9,9/10</strong> · Parking · Μπαλκόνι · Βεράντα · Κλιματισμός · Μπάνιο</p>
+        <div style="display:flex;gap:1.5rem;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.15em;color:var(--cu-d);text-transform:uppercase;">
+          <span>Check-in: Παρ. 1/5</span>
+          <span>Check-out: Σαβ. 2/5</span>
+          <span>1 δωμάτιο · 2 ενήλικες</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. ΑΓΙΟΣ ΑΧΙΛΛΕΙΟΣ -->
+<div class="stop-section reverse" id="stop-prespa">
+  <div class="stop-inner">
+    <div class="stop-media dual">
+      <div class="stop-photo">
+        <img data-img="prespa1" src="" alt="Άγιος Αχίλλειος πλωτή γέφυρα">
+        <div class="stop-day-badge">Ημέρα 2 · Σαβ. 2 Μαΐου</div>
+        <div class="stop-time-badge">~09:45 πμ</div>
+      </div>
+      <div class="stop-phone-col">
+        <div class="stop-phone">
+          <div class="sw" data-short="achilleios1"><div class="sph"><div class="phi">▶</div><div class="pht">Πλωτή Γέφυρα</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">05</div>
+      <div class="stop-tag">Αγκίστρι · Μικρή Πρέσπα</div>
+      <h2 class="stop-title">Άγιος Αχίλλειος —<br><em>το νησί στη λίμνη</em></h2>
+      <p class="stop-desc"><strong>650 μέτρα πλωτής γέφυρας</strong> πάνω ακριβώς στο νερό οδηγούν σε ένα νησί με 21 κατοίκους, 0 αυτοκίνητα και βυζαντινές εκκλησίες 10ου αιώνα. Ένα από τα δύο μοναδικά κατοικημένα νησιά σε λίμνη στην Ελλάδα.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Ελεύθερη είσοδος</span>
+        <span class="pill">Πλωτή γέφυρα 650μ.</span>
+        <span class="pill">5 βυζαντινές εκκλησίες</span>
+        <span class="pill">Υψ. 856μ.</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📍</span>
+          <div><div class="sd-label">Πρόσβαση</div><div class="sd-val">Από Βεύη: ~45χλμ. μέσω Αγ. Γερμανού → Αγκίστρι. Parking δωρεάν στη γέφυρα.</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">⛪</span>
+          <div><div class="sd-label">Βυζαντινή Βασιλική</div><div class="sd-val">Χτίστηκε 983–986 μ.Χ. από τον Τσάρο Σαμουήλ · Στο δεξί κλίτος εικάζεται ο τάφος του</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">⏱️</span>
+          <div><div class="sd-label">Χρόνος επίσκεψης</div><div class="sd-val">~1,5 ώρα για γέφυρα + νησί + βασιλική · Πρωινό στον Αγ. Γερμανό (15χλμ. πριν)</div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Στο νησί υπήρχε παλαιότερα κι άλλη εκκλησία — <strong>ένας θρύλος λέει ότι αν χτιστεί νέα, θα πέσει η παλιά</strong>. Έτσι οι κάτοικοι δεν χτίζουν. Υπάρχουν σήμερα 5 εκκλησίες σε διάφορα στάδια ερείπωσης.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. ΨΑΡΑΔΕΣ + ΒΑΡΚΑΔΑ -->
+<div class="stop-section" id="stop-psarades">
+  <div class="stop-inner">
+    <div class="stop-media dual">
+      <div class="stop-photo">
+        <img data-img="psarades" src="" alt="Ψαράδες Μεγάλη Πρέσπα">
+        <div class="stop-day-badge">Ημέρα 2 · Σαβ. 2 Μαΐου</div>
+        <div class="stop-time-badge">~10:45 πμ</div>
+      </div>
+      <div class="stop-phone-col">
+        <div class="stop-phone">
+          <div class="sw" data-short="psarades"><div class="sph"><div class="phi">▶</div><div class="pht">Ψαράδες</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">06</div>
+      <div class="stop-tag">Ψαράδες · Μεγάλη Πρέσπα</div>
+      <h2 class="stop-title">Ψαράδες &<br><em>Βαρκάδα στα Ασκηταριά</em></h2>
+      <p class="stop-desc">Το πιο απομακρυσμένο χωριό της Ελλάδας τον χειμώνα. <strong>Αλιευτικό, αυθεντικό, ανέγγιχτο</strong>. Από εδώ ξεκινά η βαρκάδα στα βυζαντινά ερημητήρια, τις βραχογραφίες και το τριεθνές σημείο Ελλάδας–Αλβανίας–Β. Μακεδονίας.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Βαρκάδα 25€/άτομο (4+ άτ.)</span>
+        <span class="pill">100€ min (1–4 άτ.)</span>
+        <span class="pill">Διάρκεια ~60 λεπτά</span>
+        <span class="pill">07:00–21:00 καλοκαίρι</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📞</span>
+          <div><div class="sd-label">Κράτηση Βαρκάδας</div><div class="sd-val"><a href="tel:+306980922530">698 092 2530</a> · <a href="https://prespesboattrip.gr" target="_blank">prespesboattrip.gr</a></div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">⛵</span>
+          <div><div class="sd-label">Τι βλέπεις στη βαρκάδα</div><div class="sd-val">Ασκηταριό Παναγίας Ελεούσας · Βυζαντινές βραχογραφίες · Τριεθνές σημείο · Αργυροπελεκάνοι</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🐟</span>
+          <div><div class="sd-label">Τοπικά προϊόντα</div><div class="sd-val">Καπνιστή τσιπούρα (μόνο επιτόπου) · Φασόλια Πρεσπών ΠΓΕ · Χειροποίητα αναμνηστικά</div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Η Μεγάλη Πρέσπα ανήκει κατά <strong>60% στη Βόρεια Μακεδονία</strong>, κατά 27% στην Ελλάδα και κατά 13% στην Αλβανία — από τις λίγες λίμνες στον κόσμο που μοιράζονται σε τρεις χώρες ταυτόχρονα.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. ΝΑΟΥΜΙΔΗΣ -->
+<div class="stop-section reverse" id="stop-naoumidis">
+  <div class="stop-inner">
+    <div class="stop-media">
+      <img data-img="naoumidis" src="" alt="Ναουμίδης Αγίου Παντελεήμονα">
+      <div class="stop-day-badge">Ημέρα 2 · Σαβ. 2 Μαΐου</div>
+      <div class="stop-time-badge">15:30 μμ · Κράτηση ✓</div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">07</div>
+      <div class="stop-tag">Άγιος Παντελεήμονας · Πέλλα</div>
+      <h2 class="stop-title">Ταβέρνα <em>Ναουμίδης</em><br>— θέα Βεγορίτιδα</h2>
+      <p class="stop-desc">Με <strong>θέα στη λίμνη Βεγορίτιδα</strong>, καπνιστά, χειροποίητα λουκάνικα και τοπικά προϊόντα. 4.5★ με 2.600+ κριτικές — μια ταβέρνα που συνδυάζει το τοπίο με τη γεύση.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Καθ. μέρα 13:00–23:30</span>
+        <span class="pill">4.5★ / 2.600+ κριτικές</span>
+        <span class="pill">Θέα λίμνη Βεγορίτιδα</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📞</span>
+          <div><div class="sd-label">Κράτηση</div><div class="sd-val"><a href="tel:+302386061238">2386 061238</a></div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🍽️</span>
+          <div><div class="sd-label">Specialty</div><div class="sd-val">Καπνιστά κρέατα · Χειροποίητα λουκάνικα · Τοπικά τυριά · Ντόπιο κρασί</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">☕</span>
+          <div><div class="sd-label">Μετά το φαγητό</div><div class="sd-val">Εβόρα Cafe (2,5χλμ. βόρεια) — υψ. 1.030μ., θέα 360°, pancakes &amp; brunch · <a href="tel:+302381032064">2381 032064</a></div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Η λίμνη Βεγορίτιδα ήταν κάποτε <strong>πολύ μεγαλύτερη</strong> — έχει χάσει πάνω από το 40% της επιφάνειάς της τον 20ο αιώνα λόγω άντλησης νερού για άρδευση και βιομηχανία. Σήμερα αναρρώνει αργά.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 9. ΕΔΕΣΣΑ -->
+<div class="stop-section" id="stop-edessa">
+  <div class="stop-inner">
+    <div class="stop-media">
+      <img data-img="edessa" src="" alt="Καταρράκτες Έδεσσας">
+      <div class="stop-day-badge">Ημέρα 2 · Σαβ. 2 Μαΐου</div>
+      <div class="stop-time-badge">~17:30 μμ</div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">08</div>
+      <div class="stop-tag">Έδεσσα · Πέλλα</div>
+      <h2 class="stop-title">Καταρράκτες<br><em>Έδεσσας</em> — 70μ.</h2>
+      <p class="stop-desc">Οι <strong>μεγαλύτεροι καταρράκτες των Βαλκανίων σε ύψος νερού</strong> — 70 μέτρα υδάτινης κουρτίνας. Πάρκο 100.000 τ.μ. με 12 καταρράκτες συνολικά, ελεύθερη είσοδος, και ένα μπαλκόνι πίσω από το νερό που λίγοι ξέρουν.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Ελεύθερη είσοδος</span>
+        <span class="pill">Ύψος 70μ.</span>
+        <span class="pill">12 καταρράκτες</span>
+        <span class="pill">Βόλτα ~1 ώρα</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📍</span>
+          <div><div class="sd-label">Πρόσβαση</div><div class="sd-val">Κέντρο Έδεσσας — Parking δωρεάν κοντά · Είσοδος από Πάρκο Καταρρακτών</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">💡</span>
+          <div><div class="sd-label">Μυστική γωνιά</div><div class="sd-val">Υπάρχει μπαλκόνι/σήραγγα πίσω από την υδάτινη κουρτίνα — ζήτα το στην είσοδο!</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🕐</span>
+          <div><div class="sd-label">Από Έδεσσα → Θεσσαλονίκη</div><div class="sd-val">~95χλμ. · ~1 ώρα · Μέσω Εγνατίας ή Π.Ε.Ο.</div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Η Έδεσσα ταυτίζεται από ορισμένους ιστορικούς με την <strong>αρχαία Αιγαί, πρώτη πρωτεύουσα του Μακεδονικού Βασιλείου</strong> — αν και η επικρατέστερη άποψη τοποθετεί τις Αιγαί στη Βεργίνα. Η συζήτηση συνεχίζεται.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section id="gallery" style="padding:0;">
+  <div class="gallery-header reveal">
+    <p class="sl">Gallery</p>
+    <h2 class="st">Φωτογραφίες<br><em>από την εκδρομή</em></h2>
+  </div>
+  <div class="gallery-mosaic">
+    <div class="gitem"><img data-img="g1" src="" alt="" loading="lazy"><div class="gio"></div></div>
+    <div class="gitem"><img data-img="g2" src="" alt="" loading="lazy"><div class="gio"></div></div>
+    <div class="gitem"><img data-img="g3" src="" alt="" loading="lazy"><div class="gio"></div></div>
+    <div class="gitem"><img data-img="g4" src="" alt="" loading="lazy"><div class="gio"></div></div>
+    <div class="gitem"><img data-img="g5" src="" alt="" loading="lazy"><div class="gio"></div></div>
+    <div class="gitem"><img data-img="g6" src="" alt="" loading="lazy"><div class="gio"></div></div>
+    <div class="gitem"><img data-img="g7" src="" alt="" loading="lazy"><div class="gio"></div></div>
+    <div class="gitem"><img data-img="g8" src="" alt="" loading="lazy"><div class="gio"></div></div>
+    <div class="gitem"><img data-img="g9" src="" alt="" loading="lazy"><div class="gio"></div></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Πρωτομαγιά 2025 · Δυτική Μακεδονία</div>
+  <div class="footer-copy">Ένας πλήρης οδηγός από πρώτο χέρι · music-steps.gr</div>
+</footer>
+
+<div id="lightbox">
+  <span id="lightbox-close">✕ &nbsp;Κλείσιμο</span>
+  <span id="lightbox-prev">&#8592;</span>
+  <img id="lightbox-img" src="" alt="">
+  <span id="lightbox-next">&#8594;</span>
+  <div id="lightbox-counter"></div>
+</div>
+
+<script>
+const nb=document.getElementById('navbar');
+window.addEventListener('scroll',()=>nb.classList.toggle('scrolled',scrollY>60));
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+const sObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const el=x.target,raw=el.textContent.trim(),num=parseInt(raw.replace(/\D/g,'')),suf=raw.replace(/\d/g,'');if(!isNaN(num)){let s=0;const step=ts=>{if(!s)s=ts;const p=Math.min((ts-s)/1200,1),ea=1-Math.pow(1-p,3);el.textContent=Math.floor(ea*num)+suf;if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);}sObs.unobserve(el);}});},{threshold:.5});
+document.querySelectorAll('.stat-num').forEach(s=>sObs.observe(s));
+(function(){let imgs=[],idx=0;function open(i){idx=i;const lb=document.getElementById('lightbox'),im=document.getElementById('lightbox-img'),co=document.getElementById('lightbox-counter');im.src=imgs[idx].src;co.textContent=(idx+1)+' / '+imgs.length;lb.classList.add('active');document.body.style.overflow='hidden';}function close(){document.getElementById('lightbox').classList.remove('active');document.body.style.overflow='';}document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{imgs=Array.from(document.querySelectorAll('#gallery .gitem img'));imgs.forEach((im,i)=>im.closest('.gitem').addEventListener('click',()=>open(i)));},600);document.getElementById('lightbox-close').addEventListener('click',close);document.getElementById('lightbox-prev').addEventListener('click',e=>{e.stopPropagation();idx=(idx-1+imgs.length)%imgs.length;open(idx);});document.getElementById('lightbox-next').addEventListener('click',e=>{e.stopPropagation();idx=(idx+1)%imgs.length;open(idx);});document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)close();});document.addEventListener('keydown',e=>{if(!document.getElementById('lightbox').classList.contains('active'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft'){idx=(idx-1+imgs.length)%imgs.length;open(idx);}if(e.key==='ArrowRight'){idx=(idx+1)%imgs.length;open(idx);}});});})();
+</script>
+</body>
+</html>
