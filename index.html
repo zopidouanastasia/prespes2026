@@ -14,9 +14,9 @@ const IMAGES = {
   intro:  "https://live.staticflickr.com/65535/55288928300_016e34190e_b.jpg",
   lynx:   "https://live.staticflickr.com/65535/55288928285_70b7109e71_b.jpg",
   wolf:   "PHOTO_WOLF",
-  zazari: "PHOTO_ZAZARI",
-  thomas: "PHOTO_THOMAS",
-  florina:"PHOTO_FLORINA",
+  zazari: "https://live.staticflickr.com/65535/55287613487_0a708d75e3_b.jpg",
+  thomas: "https://www.xrysoiskoufoi.gr/lmnts/articles/2531471/thomas4.jpg",
+  florina:"https://live.staticflickr.com/65535/55288672268_e1a1fcbf60_b.jpg",
   prespa1:"PHOTO_PRESPA1",
   prespa2:"PHOTO_PRESPA2",
   psarades:"https://live.staticflickr.com/65535/55288534936_037fff4133_b.jpg",
@@ -30,7 +30,7 @@ const IMAGES = {
 const SHORTS = {
   lynx:"rzyAuD9x5V0", wolf:"IEqU61apyfA",
   florina1:"vt5ArtXgApg", florina2:"MGgBJatJbzg",
-  zazari:"46VzbC4NPhI", train:"c4Lz4-S-5kU",
+  zazari:"uHQ7LuxK-S4", train:"c4Lz4-S-5kU",
   psarades:"lFahPEgs51E", psarades2:"XXC2WU_tJd4",
   achilleios1:"g8wFvdmNPwY", achilleios2:"LV5vd0M7WKw",
   germanos:"WXM4B5oiBXY",
@@ -159,17 +159,15 @@ section{padding:6rem 0;}
 .stop-phone .sph .phi{width:56px;height:56px;border:1px solid var(--cu-d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
 .stop-phone .sph .pht{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;text-align:center;padding:0 .8rem;}
 
-/* dual media: photo + video side by side */
-.stop-media.dual{display:grid;grid-template-columns:1fr 1fr;gap:0;}
-.stop-media.dual .stop-photo{position:relative;overflow:hidden;}
+/* dual media: photo on top, video below */
+.stop-media.dual{display:flex;flex-direction:column;gap:0;}
+.stop-media.dual .stop-photo{position:relative;overflow:hidden;min-height:320px;}
 .stop-media.dual .stop-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);}
-.stop-media.dual .stop-phone-col{background:var(--ink);display:flex;align-items:stretch;justify-content:center;min-height:420px;padding:0;}
-.stop-media.dual .stop-phone-col .stop-phone{width:100%;border-radius:0;aspect-ratio:9/16;}
+.stop-media.dual .stop-phone-col{background:var(--ink);display:flex;align-items:center;justify-content:center;padding:1.5rem 2rem;}
+.stop-media.dual .stop-phone-col .stop-phone{width:min(240px,60%);border-radius:32px;border:2px solid rgba(184,115,51,.25);box-shadow:0 16px 48px rgba(0,0,0,.7);aspect-ratio:9/16;}
 @media(max-width:900px){
-  .stop-media.dual{grid-template-columns:1fr;}
-  .stop-media.dual .stop-photo{min-height:260px;}
-  .stop-media.dual .stop-phone-col{min-height:0;}
-  .stop-media.dual .stop-phone-col .stop-phone{aspect-ratio:16/9;width:100%;}
+  .stop-media.dual .stop-phone-col{padding:1rem;}
+  .stop-media.dual .stop-phone-col .stop-phone{width:min(180px,55%);}
 }
 
 /* Info column */
@@ -196,11 +194,53 @@ section{padding:6rem 0;}
 .sd-val a{color:var(--cu);text-decoration:none;}
 .sd-val a:hover{text-decoration:underline;}
 
+/* ACCORDION */
+.accordion{margin-top:1.2rem;display:flex;flex-direction:column;gap:.4rem;}
+.acc-btn{width:100%;background:rgba(184,115,51,.07);border:1px solid rgba(184,115,51,.2);padding:.7rem 1.1rem;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .25s;color:var(--cream);}
+.acc-btn:hover{background:rgba(184,115,51,.14);}
+.acc-btn-label{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cu);}
+.acc-btn-icon{font-size:.8rem;color:var(--cu);transition:transform .3s;flex-shrink:0;}
+.acc-btn.open .acc-btn-icon{transform:rotate(180deg);}
+.acc-body{display:none;padding:1.2rem 1rem;border:1px solid rgba(184,115,51,.15);border-top:none;background:rgba(184,115,51,.03);}
+.acc-body.open{display:block;animation:accIn .3s ease;}
+@keyframes accIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1.5rem;}
+.modal-overlay.active{display:flex;animation:lbIn .3s ease;}
+.modal-box{background:var(--ink-s);border:1px solid rgba(184,115,51,.25);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:2.5rem 2rem 2rem;}
+.modal-box::-webkit-scrollbar{width:3px;}
+.modal-box::-webkit-scrollbar-thumb{background:var(--cu-d);}
+.modal-close{position:absolute;top:1rem;right:1.2rem;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;color:var(--cu);cursor:pointer;border:1px solid var(--cu-d);padding:.35rem .9rem;text-transform:uppercase;transition:background .2s;}
+.modal-close:hover{background:rgba(184,115,51,.15);}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:#fff;margin-bottom:1.5rem;padding-right:3rem;line-height:1.2;}
+.modal-title em{font-style:italic;color:var(--cu-l);}
+.modal-section{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(184,115,51,.1);}
+.modal-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.modal-section-title{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.3em;color:var(--cu);text-transform:uppercase;margin-bottom:.8rem;}
+.modal-btn{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.2rem;font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--cu);border:1px solid var(--cu-d);padding:.5rem 1.1rem;cursor:pointer;background:none;transition:background .2s;}
+.modal-btn:hover{background:rgba(184,115,51,.12);}
+
 /* Fun fact inside stop */
 .stop-fact{background:rgba(184,115,51,.06);border-left:2px solid var(--cu);padding:1rem 1.2rem;margin-top:1.2rem;}
 .sf-label{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.28em;color:var(--cu);text-transform:uppercase;margin-bottom:.4rem;}
 .sf-text{font-size:.88rem;color:var(--cr-d);line-height:1.7;}
 .sf-text strong{color:var(--cu-l);}
+
+/* MINI GALLERY ανά στάση */
+.stop-gallery{padding:1.2rem 3rem 2rem;}
+@media(max-width:900px){.stop-gallery{padding:1rem 1.5rem 1.5rem;}}
+.stop-gallery-label{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.35em;color:var(--cu-d);text-transform:uppercase;margin-bottom:.8rem;display:flex;align-items:center;gap:.6rem;}
+.stop-gallery-label::before{content:'';width:18px;height:1px;background:var(--cu-d);display:inline-block;}
+.stop-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+.stop-gallery-grid.g4{grid-template-columns:repeat(4,1fr);}
+.stop-gallery-grid.g2{grid-template-columns:repeat(2,1fr);}
+@media(max-width:600px){.stop-gallery-grid,.stop-gallery-grid.g4{grid-template-columns:repeat(2,1fr);}}
+.sg-item{overflow:hidden;cursor:pointer;position:relative;aspect-ratio:4/3;}
+.sg-item img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.8) saturate(.9);transition:transform .6s cubic-bezier(.16,1,.3,1),filter .4s;}
+.sg-item:hover img{transform:scale(1.06);filter:brightness(1) saturate(1);}
+.sg-item .sg-ov{position:absolute;inset:0;background:rgba(184,115,51,.0);transition:background .3s;}
+.sg-item:hover .sg-ov{background:rgba(184,115,51,.08);}
 
 /* GALLERY */
 #gallery{background:var(--ink);padding:0;}
@@ -257,7 +297,7 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
   <div class="hero-content">
     <p class="hero-kicker">1–2 Μαΐου 2025 · Δυτική Μακεδονία</p>
     <h1 class="hero-title">Πρωτομαγιά<br>στις <em>Πρέσπες</em></h1>
-    <p class="hero-sub">Ένας πλήρης οδηγός για τη διαδρομή</p>
+    <p class="hero-sub">Road trip στις Πρέσπες και τη Φλώρινα</p>
     <div class="hero-line"></div>
     <div class="hero-meta">
       <div class="hmi"><span>Αναχώρηση</span>Θεσσαλονίκη</div>
@@ -276,8 +316,9 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
       <div class="intro-text reveal">
         <p class="sl">Η Ιδέα</p>
         <h2 class="st">Δύο μέρες που<br><em>αλλάζουν κάτι</em></h2>
-        <p>Η Δυτική Μακεδονία είναι ένας από τους πιο υποτιμημένους προορισμούς της Ελλάδας. <strong>Λύγκες, βυζαντινά ερημητήρια, λίμνες που παγώνουν τον χειμώνα</strong> — κι ένα φαγητό στο Σκλήθρο που θυμάσαι χρόνια.</p>
-        <div class="intro-pull">«Αυτός ο οδηγός φτιάχτηκε για να τον πάρεις μαζί σου.»</div>
+        <p>Η Δυτική Μακεδονία δεν είναι απλώς ένας προορισμός· είναι μια εμπειρία που μένει μέσα σου. Ένας τόπος γεμάτος <strong>φως, αλπικά τοπία, ιστορία</strong> και ανθρώπους που σε κάνουν να νιώθεις πως ανήκεις εκεί, ακόμη κι αν βρέθηκες για πρώτη φορά.</p>
+        <p><strong>Λύκοι και λύγκες, βυζαντινά ασκηταριά, λίμνες που παγώνουν τον χειμώνα</strong> — και εκλεκτό φαγητό σε εστιατόρια με χρυσούς σκούφους.</p>
+        <div class="intro-pull">«Αυτός ο οδηγός δημιουργήθηκε σαν ένας ανθρώπινος συνοδοιπόρος για το ταξίδι. Βήμα βήμα, στάση τη στάση, με μικρές ιστορίες, χρήσιμες πληροφορίες και όλα όσα θα θέλαμε κι εμείς να γνωρίζουμε πριν ξεκινήσουμε αυτό το ταξίδι.»</div>
         <p>Κάθε στάση έχει ό,τι χρειάζεσαι: <strong>ωράρια, τιμές, τηλέφωνα, ιστορικό και fun facts</strong>. Απλώς κατεβάζεις την ιστοσελίδα offline και ξεκινάς.</p>
       </div>
       <div class="intro-image reveal d2">
@@ -320,33 +361,106 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
     </div>
     <div class="stop-info reveal">
       <div class="stop-num">01</div>
-      <div class="stop-tag">Αγραπιδιές · Αμύνταιο</div>
+      <div class="stop-tag">Πρώτη στάση · Αγραπιδιές · Αμύνταιο</div>
       <h2 class="stop-title">Αρκτούρος —<br><em>Καταφύγιο Λύκου & Λύγκα</em></h2>
       <p class="stop-desc">Μέσα σε <strong>70 στρέμματα φυσικού δάσους βελανιδιάς</strong>, λύκοι και ευρασιατικοί λύγκες που διασώθηκαν από παράνομη αιχμαλωσία ζουν στο μοναδικό καταφύγιο του είδους στην Ελλάδα. Αν είσαι τυχερός θα τους δεις από κοντά — εκείνοι θα σε έχουν μυριστεί πολύ πριν τους δεις εσύ.</p>
+
+      <!-- Pills με σωστά στοιχεία -->
       <div class="stop-pills">
-        <span class="pill cu">Σαβ/κο 10:00-16:30</span>
-        <span class="pill">6€ ενήλικες</span>
-        <span class="pill">4€ παιδιά 3-12</span>
-        <span class="pill">Δωρεάν &lt;3 ετών</span>
+        <span class="pill cu">Καθ. μέρα 10:00–16:30</span>
+        <span class="pill">10€ ενήλικες</span>
+        <span class="pill">6€ παιδιά 5-17</span>
+        <span class="pill">Δωρεάν 0-4 & ΑΜΕΑ</span>
         <span class="pill">Ξενάγηση ανά ώρα</span>
       </div>
+
+      <!-- Κουμπί Modal -->
+      <button class="modal-btn" onclick="document.getElementById('modal-arcturos').classList.add('active')">
+        📋 Αναλυτικές Πληροφορίες & Εισιτήρια
+      </button>
+
+      <!-- Accordion Gallery -->
+      <div class="accordion">
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span class="acc-btn-label">📸 Φωτογραφίες από τον Αρκτούρο</span>
+          <span class="acc-btn-icon">▼</span>
+        </button>
+        <div class="acc-body">
+          <div class="stop-gallery-grid g4" data-gallery="arcturos" style="margin-top:.5rem;">
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288672243_bfeb60cd14_b.jpg" alt="Αρκτούρος"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288928285_70b7109e71_b.jpg" alt="Λύγκας"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287613607_1608e7795a_b.jpg" alt="Αρκτούρος"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288928235_f5bb4e31b9_b.jpg" alt="Αρκτούρος"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287613582_507cc40253_b.jpg" alt="Αρκτούρος"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288928215_f7a28bb45e_b.jpg" alt="Αρκτούρος"><div class="sg-ov"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ΑΡΚΤΟΥΡΟΣ -->
+<div class="modal-overlay" id="modal-arcturos" onclick="if(event.target===this)this.classList.remove('active')">
+  <div class="modal-box">
+    <span class="modal-close" onclick="document.getElementById('modal-arcturos').classList.remove('active')">✕ Κλείσιμο</span>
+    <div class="modal-title">Αρκτούρος — <em>Κέντρο Προστασίας Λύκου & Λύγκα</em></div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">📍 Πού βρίσκεται</div>
+      <p style="font-size:.9rem;color:var(--cr-d);line-height:1.75;">Αγραπιδιές, Δ. Αμυνταίου, Φλώρινα · Υψ. 650μ. · 70 στρέμματα φυσικού δάσους βελανιδιάς. Το κέντρο δημιουργήθηκε για να δώσει τέλος στην παράνομη κατοχή λύκων — οι κάτοικοι έχουν διασωθεί και δεν μπορούν να επιστρέψουν στη φύση.</p>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">⏰ Ωράριο & Ξεναγήσεις</div>
       <div class="stop-details">
         <div class="stop-detail">
-          <span class="sd-icon">📍</span>
-          <div><div class="sd-label">Διεύθυνση</div><div class="sd-val">Αγραπιδιές, Δ. Αμυνταίου — 14χλμ. από Νυμφαίο</div></div>
+          <span class="sd-icon">🕐</span>
+          <div><div class="sd-label">Ωράριο</div><div class="sd-val">Καθημερινά 10:00–16:30 (τελευταία ξενάγηση 16:30)</div></div>
         </div>
         <div class="stop-detail">
-          <span class="sd-icon">📞</span>
-          <div><div class="sd-label">Τηλέφωνο & Site</div><div class="sd-val"><a href="tel:+302385022210">2385 022210</a> · <a href="https://arcturos.gr" target="_blank">arcturos.gr</a></div></div>
+          <span class="sd-icon">👣</span>
+          <div><div class="sd-label">Ξεναγήσεις</div><div class="sd-val">10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00 & 16:30</div></div>
         </div>
         <div class="stop-detail">
           <span class="sd-icon">⚠️</span>
-          <div><div class="sd-label">Σημαντικό</div><div class="sd-val">Τελευταία ξενάγηση 16:30 · Κατοικίδια δεν επιτρέπονται · Ορειβατικά παπούτσια συνιστώνται</div></div>
+          <div><div class="sd-label">Σημαντικό</div><div class="sd-val">Κατοικίδια δεν επιτρέπονται · Φλας, τρίποδα & μονόποδα απαγορεύονται · Ορειβατικά παπούτσια συνιστώνται</div></div>
         </div>
       </div>
-      <div class="stop-fact">
-        <div class="sf-label">Fun Fact</div>
-        <p class="sf-text">Ο λύγκας <strong>δεν υπάρχει πλέον ελεύθερος στην Ελλάδα</strong> — ο τελευταίος εντοπίστηκε στη Β. Μακεδονία δεκαετίες πριν. Αυτά τα άτομα είναι οι μοναδικοί που ζουν σε ελληνικό έδαφος.</p>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">🎟️ Εισιτήρια</div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">👤</span>
+          <div><div class="sd-label">Ατομικά</div><div class="sd-val">Ενήλικες <strong style="color:var(--cu-l);">10€</strong> · Παιδιά 5-17 ετών <strong style="color:var(--cu-l);">6€</strong> · Παιδιά 0-4 & ΑΜΕΑ <strong style="color:var(--cu-l);">Δωρεάν</strong></div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">👨‍👩‍👧</span>
+          <div><div class="sd-label">Οικογενειακά</div><div class="sd-val">2 ενήλ. & 1 παιδί 24€ · 2 ενήλ. & 2 παιδιά 28€ · 2 ενήλ. & 3+ παιδιά 30€ · 1 ενήλ. & 2+ παιδιά 20€</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">📞 Επικοινωνία</div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📞</span>
+          <div><div class="sd-label">Τηλέφωνα</div><div class="sd-val"><a href="tel:+302386041500">2386 041500</a> (καθημερινές) · <a href="tel:+302386031155">2386 031155</a> (Σ/Κ)</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">🌐</span>
+          <div><div class="sd-label">Site</div><div class="sd-val"><a href="https://www.arcturos.gr/gr/organismos/episkeftheite/" target="_blank">arcturos.gr → Επισκεφθείτε μας</a></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">🐺 Fun Fact</div>
+      <div class="stop-fact" style="margin-top:0;">
+        <p class="sf-text">Ο ευρασιατικός λύγκας <strong>είναι ουσιαστικά εξαφανισμένος από την ελεύθερη φύση της Ελλάδας</strong>. Τα άτομα του Αρκτούρου είναι οι μοναδικοί λύγκες που ζουν σε ελληνικό έδαφος — διασώθηκαν από παράνομη αιχμαλωσία και δεν μπορούν να επιβιώσουν στη φύση.</p>
       </div>
     </div>
   </div>
@@ -355,19 +469,21 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
 <!-- 2. ΖΑΖΑΡΗ -->
 <div class="stop-section reverse" id="stop-zazari">
   <div class="stop-inner">
-    <div class="stop-media">
-      <img data-img="zazari" src="" alt="Λίμνη Ζαζάρη">
-      <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
-      <div class="stop-time-badge">~12:00 μμ</div>
-      <div class="stop-phone-wrap" style="position:absolute;bottom:1rem;right:1rem;width:110px;height:195px;inset:auto;">
-        <div class="stop-phone" style="width:110px;">
-          <div class="sw" data-short="zazari"><div class="sph"><div class="phi" style="width:32px;height:32px;font-size:.8rem;">▶</div><div class="pht">Ζαζάρη</div></div></div>
+    <div class="stop-media dual">
+      <div class="stop-photo">
+        <img data-img="zazari" src="" alt="Λίμνη Ζαζάρη">
+        <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
+        <div class="stop-time-badge">~12:00 μμ</div>
+      </div>
+      <div class="stop-phone-col">
+        <div class="stop-phone">
+          <div class="sw" data-short="zazari"><div class="sph"><div class="phi">▶</div><div class="pht">Ζαζάρη</div></div></div>
         </div>
       </div>
     </div>
     <div class="stop-info reveal">
       <div class="stop-num">02</div>
-      <div class="stop-tag">Λιμνοχώρι · Αμύνταιο</div>
+      <div class="stop-tag">ΔΕΥΤΕΡΗ ΣΤΑΣΗ · Λιμνοχώρι · Αμύνταιο</div>
       <h2 class="stop-title">Λίμνη <em>Ζαζάρη</em><br>— ο καθρέφτης</h2>
       <p class="stop-desc">Άγνωστη, μικρή, <strong>τελείως αναλλοίωτη</strong>. Η Ζαζάρη βρίσκεται σε υψόμετρο 600μ. και έχει έκταση μόλις 2 τ.χλμ. — αλλά το τοπίο γύρω της είναι από τα πιο φωτογενή της Β. Ελλάδας. Τον χειμώνα παγώνει. Τον Μάιο αντικατοπτρίζει τον ουρανό σαν καθρέφτης.</p>
       <div class="stop-pills">
@@ -379,7 +495,7 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
       <div class="stop-details">
         <div class="stop-detail">
           <span class="sd-icon">📍</span>
-          <div><div class="sd-label">Πρόσβαση</div><div class="sd-val">Από Αγραπιδιές: ~15χλμ. μέσω Αετού → Λιμνοχώρι. Dirt road στην όχθη.</div></div>
+          <div><div class="sd-label">Πρόσβαση</div><div class="sd-val">Από Αγραπιδιά: ~15χλμ. μέσω Αετού → Λιμνοχώρι. Dirt road στην όχθη.</div></div>
         </div>
         <div class="stop-detail">
           <span class="sd-icon">🐦</span>
@@ -394,11 +510,18 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
         <div class="sf-label">Fun Fact</div>
         <p class="sf-text">Το όνομα «Ζαζάρη» προήλθε από το <strong>επώνυμο του πρώτου ιδιοκτήτη της</strong>. Άλλες ονομασίες: «Λίμνη Λιμνοχωρίου» και «Μικρολίμνη». Χωρίζεται από τη Χειμαδίτιδα μόνο από μια λωρίδα γης 2χλμ.</p>
       </div>
+      <div class="stop-gallery">
+        <div class="stop-gallery-label">Φωτογραφίες από τη Ζαζάρη</div>
+        <div class="stop-gallery-grid g4" data-gallery="zazari">
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288928210_38121a5e26_b.jpg" alt="Λίμνη Ζαζάρη"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288672123_6fcc60ff17_b.jpg" alt="Λίμνη Ζαζάρη"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287613492_7df46d702b_b.jpg" alt="Λίμνη Ζαζάρη"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287613487_0a708d75e3_b.jpg" alt="Λίμνη Ζαζάρη"><div class="sg-ov"></div></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-<!-- 3. ΘΩΜΑΣ -->
 <div class="stop-section" id="stop-thomas">
   <div class="stop-inner">
     <div class="stop-media">
@@ -409,8 +532,8 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
     <div class="stop-info reveal">
       <div class="stop-num">03</div>
       <div class="stop-tag">Σκλήθρο · 18ο χλμ. Αμυνταίου–Καστοριάς</div>
-      <h2 class="stop-title">Restaurant <em>Thomas</em><br>— το γεύμα της εκδρομής</h2>
-      <p class="stop-desc">Από το 1970 οικογενειακή επιχείρηση — <strong>τρίτη γενιά</strong> στην κουζίνα. Τοπικά προϊόντα από δικούς παραγωγούς, ντόπια τυριά, κρασιά Αμυνταίου. Η ταβέρνα του Θωμά ήταν λόγος ταξιδιού από μόνη της πριν οι Πρέσπες γίνουν trend.</p>
+      <h2 class="stop-title">Restaurant <em>Θωμάς</em><br></h2>
+      <p class="stop-desc">Τον Θωμά τον γνώρισα περίπου πριν 40 χρόνια. Ήταν η κλασική παραδοσική ελληνική ταβέρνα με την πλαστική καρέκλα. Αλλά από τότε είχε στο μενού του το εκλεκτό και φινετάτο πιάτο "σαλιγγάρια σκορδοβούτυρο". Τόσο λαχταριστό που ένα παιδί δημοτικού όπως εγώ δεν μπόρεσε να αντισταθεί στην δοκιμή και το αποτέλεσμα ήταν μια ζεστή ανάμνηση. Έκτοτε έχει εξελιξεί σε κορυφαίο γαστρονομικό προορισμό για όλη την περιοχή, με έξοχη διακόσμηση και πολλά βραβεία. Οικογενειακή επιχείρηση από το 1970 — <strong>τρίτη γενιά</strong> στην κουζίνα. Τοπικά προϊόντα, ντόπια τυριά, κρασιά Αμυνταίου. Η ταβέρνα του Θωμά είναι συχνός λόγος ταξιδιού από μόνη της για την οικογένεια μας.</p>
       <div class="stop-pills">
         <span class="pill cu">Δευτ. Κλειστό</span>
         <span class="pill">Τρ–Σαβ 13:00–22:00</span>
@@ -439,51 +562,153 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
   </div>
 </div>
 
-<!-- 4. ΦΛΩΡΙΝΑ -->
-<div class="stop-section reverse" id="stop-florina">
-  <div class="stop-inner">
-    <div class="stop-media dual">
-      <div class="stop-photo">
-        <img data-img="florina" src="" alt="Φλώρινα Σακουλέβας">
-        <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
-        <div class="stop-time-badge">~17:00 μμ</div>
-      </div>
-      <div class="stop-phone-col">
-        <div class="stop-phone">
-          <div class="sw" data-short="florina1"><div class="sph"><div class="phi">▶</div><div class="pht">Σακουλέβας</div></div></div>
-        </div>
+<!-- 4. ΦΛΩΡΙΝΑ — full width -->
+<div class="stop-section" id="stop-florina" style="padding:0;">
+
+  <!-- Επάνω: φωτό + βίντεο σε grid -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:380px;">
+    <div style="position:relative;overflow:hidden;">
+      <img data-img="florina" src="" alt="Φλώρινα Σακουλέβας" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82);">
+      <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
+      <div class="stop-time-badge">~17:00 μμ</div>
+    </div>
+    <div style="background:var(--ink);display:flex;align-items:stretch;">
+      <div class="stop-phone" style="width:100%;border-radius:0;aspect-ratio:unset;height:100%;">
+        <div class="sw" data-short="florina1"><div class="sph"><div class="phi">▶</div><div class="pht">Σακουλέβας</div></div></div>
       </div>
     </div>
-    <div class="stop-info reveal">
+  </div>
+  @media(max-width:700px){
+    #stop-florina > div:first-child { grid-template-columns:1fr; }
+  }
+
+  <!-- Κάτω: full-width περιεχόμενο -->
+  <div style="max-width:1100px;margin:0 auto;padding:3rem 2rem;">
+    <div class="reveal">
       <div class="stop-num">04</div>
       <div class="stop-tag">Φλώρινα · Παλιά Πόλη</div>
       <h2 class="stop-title">Φλώρινα —<br><em>η πόλη των ζωγράφων</em></h2>
-      <p class="stop-desc">Νεοκλασικά αρχοντικά, <strong>παραποτάμιος δρόμος Σακουλέβα</strong>, εργαστήρια ζωγράφων, Μουσείο Σύγχρονης Τέχνης με 600+ έργα. Μια πόλη που ανακαλύπτεις ότι έπρεπε να έχεις επισκεφθεί χρόνια πριν.</p>
+      <p class="stop-desc" style="max-width:700px;">Νεοκλασικά αρχοντικά, <strong>παραποτάμιος δρόμος Σακουλέβα</strong>, εργαστήρια ζωγράφων, Μουσείο Σύγχρονης Τέχνης με 700+ έργα. Μια πόλη που ανακαλύπτεις ότι έπρεπε να έχεις επισκεφθεί χρόνια πριν.</p>
       <div class="stop-pills">
         <span class="pill cu">Ελεύθερη βόλτα</span>
         <span class="pill">Πεζόδρομος Μελά</span>
         <span class="pill">Αρχαιολ. Μουσείο</span>
         <span class="pill">Σαρακατσάνικη Αγορά</span>
       </div>
-      <div class="stop-details">
-        <div class="stop-detail">
-          <span class="sd-icon">🏛️</span>
-          <div><div class="sd-label">Αρχαιολογικό Μουσείο</div><div class="sd-val">Δευτ. Κλειστό · Τρ–Κυρ 08:30–15:30 · Δωρεάν είσοδος Κυριακές</div></div>
+
+      <!-- Accordions -->
+      <div class="accordion" style="margin-top:2rem;">
+
+        <!-- 1. Σακουλέβας -->
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span class="acc-btn-label">🌊 Παραποτάμιος Δρόμος Σακουλέβα</span>
+          <span class="acc-btn-icon">▼</span>
+        </button>
+        <div class="acc-body">
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.85;margin-bottom:.8rem;">Ο <strong style="color:var(--cu-l);">Σακουλέβας</strong> είναι ο ποταμός που διασχίζει το κέντρο της Φλώρινας. Η παραποτάμια λεωφόρος με τα νεοκλασικά αρχοντικά, τα εργαστήρια ζωγράφων και τα πλακόστρωτα στενά αποτελεί την <strong style="color:var(--cu-l);">ψυχή της πόλης</strong>.</p>
+          <div class="stop-fact"><div class="sf-label">Fun Fact</div><p class="sf-text">Η Φλώρινα είχε κάποτε <strong>αρκετά εργαστήρια ζωγράφων ανά κάτοικο</strong> από οποιαδήποτε άλλη ελληνική επαρχιακή πόλη. Ο Σακουλέβας ήταν πηγή έμπνευσης για γενιές καλλιτεχνών.</p></div>
+          <div class="stop-gallery-grid" data-gallery="florina-sakoulevas" style="margin-top:1rem;">
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288672313_b498af3ea9_b.jpg" alt="Σακουλέβας"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288675918_e33f7c5943_b.jpg" alt="Σακουλέβας"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288763544_5a293ba079_b.jpg" alt="Φλώρινα"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288535271_b6ac1c61f6_b.jpg" alt="Φλώρινα"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287619142_56c413118f_b.jpg" alt="Φλώρινα"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288672303_656d88089d_b.jpg" alt="Φλώρινα"><div class="sg-ov"></div></div>
+          </div>
         </div>
-        <div class="stop-detail">
-          <span class="sd-icon">🛍️</span>
-          <div><div class="sd-label">Τι να αγοράσεις</div><div class="sd-val">Πιπεριές Φλώρινης ΠΟΠ · Χειροποίητα κεριά · Τοπικά τυριά · Τσάι Βίτσι</div></div>
+
+        <!-- 2. Σιδηροδρομικός -->
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span class="acc-btn-label">🚉 Σιδηροδρομικός Σταθμός & Πινακοθήκη</span>
+          <span class="acc-btn-icon">▼</span>
+        </button>
+        <div class="acc-body">
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.85;margin-bottom:.8rem;">Χτισμένος το <strong style="color:var(--cu-l);">1931</strong> στη γραμμή Θεσσαλονίκης–Φλώρινας, το κτίριο του σταθμού στεγάζει σήμερα την <strong style="color:var(--cu-l);">Πινακοθήκη Φλωρινιωτών Καλλιτεχνών</strong> — 100+ έργα 40 καλλιτεχνών από τη δεκαετία του 1920 έως σήμερα.</p>
+          <div class="stop-fact"><div class="sf-label">Fun Fact</div><p class="sf-text">Η γραμμή Θεσσαλονίκης–Φλώρινας ξεκίνησε ως <strong>οθωμανική κατασκευή το 1894</strong> για να ενώσει τη Θεσσαλονίκη με το Μοναστήρι. Η Φλώρινα αποτελεί τον τελευταίο σταθμό — «τέρμα γραμμής» από το 1931.</p></div>
+          <div class="stop-gallery-grid g2" data-gallery="florina-station" style="margin-top:1rem;max-width:500px;">
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288672358_dd42cd6528_b.jpg" alt="Σταθμός Φλώρινας"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288672348_b96689d03b_b.jpg" alt="Σταθμός Φλώρινας"><div class="sg-ov"></div></div>
+          </div>
         </div>
-        <div class="stop-detail">
-          <span class="sd-icon">☕</span>
-          <div><div class="sd-label">Καφές</div><div class="sd-val">Πεζόδρομος Μελά — κεντρικός δρόμος με πολλές επιλογές café</div></div>
+
+        <!-- 3. Σπίτι Ζωγράφου & Φως -->
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span class="acc-btn-label">🎨 Το Σπίτι του Ζωγράφου & το Φως της Φλώρινας</span>
+          <span class="acc-btn-icon">▼</span>
+        </button>
+        <div class="acc-body">
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2vw,1.25rem);color:#fff;line-height:1.8;border-left:2px solid var(--cu);padding-left:1.4rem;margin:0 0 1.2rem;">«Η Φλώρινα δεν είναι μόνο μια πόλη του Βορρά. Είναι μια πόλη του φωτός. Όχι όμως ενός φωτός σταθερού και προβλέψιμου. Εδώ το φως αλλάζει πρόσωπα.»</div>
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.85;margin-bottom:.6rem;">Τις μέρες της ομίχλης, ο Σακουλέβας χάνεται μέσα στο γκρίζο και η πόλη μοιάζει να αιωρείται ανάμεσα στη μνήμη και στο όνειρο. Είναι το φως που έκανε τον <strong style="color:var(--cu-l);">Θόδωρο Αγγελόπουλο</strong> να μιλά για «το χαμένο φως» — εκείνο που δεν αποκαλύπτει τα πάντα, αλλά αφήνει χώρο στη φαντασία.</p>
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.85;margin-bottom:.6rem;">Κι ύστερα έρχεται η άλλη πλευρά της Φλώρινας. Το καθαρό, ορεινό φως. Το φως που πέφτει πάνω στα κόκκινα φύλλα του φθινοπώρου, αντανακλά στο χιόνι του χειμώνα και κάνει τα χρώματα να μοιάζουν <strong style="color:var(--cu-l);">σχεδόν ζωγραφισμένα</strong> πριν ακόμη τα αγγίξει ο καλλιτέχνης.</p>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2vw,1.2rem);color:#fff;line-height:1.7;text-align:right;margin:1rem 0;opacity:.85;">«Ίσως γι' αυτό η Φλώρινα γέννησε τόσους ζωγράφους.<br>Γιατί εδώ το φως δεν φωτίζει απλώς τον τόπο — <em>τον μεταμορφώνει.</em>»</div>
+          <div class="stop-fact"><div class="sf-label">Fun Fact</div><p class="sf-text">Η Φλώρινα έχει αναλογικά <strong>περισσότερους σημαντικούς ζωγράφους από οποιαδήποτε άλλη ελληνική επαρχιακή πόλη</strong> — μεταξύ τους ο Αλέκος Κοντόπουλος, ο Γιώργης Ρόρρης και δεκάδες άλλοι.</p></div>
+          <div class="stop-gallery-grid g2" data-gallery="florina-painter" style="margin-top:1rem;max-width:400px;">
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287613682_e0b75ca6f4_b.jpg" alt="Σπίτι Ζωγράφου Φλώρινα"><div class="sg-ov"></div></div>
+          </div>
         </div>
-      </div>
-      <div class="stop-fact">
-        <div class="sf-label">Fun Fact</div>
-        <p class="sf-text">Η Φλώρινα έχει δώσει <strong>δεκάδες σημαντικούς Έλληνες ζωγράφους</strong> αναλογικά με τον πληθυσμό της — μεταξύ αυτών ο αφαιρετιστής Αλέκος Κοντόπουλος (1905–1975). Το Μουσείο Σύγχρονης Τέχνης στο σταθμό τρένου αξίζει.</p>
-      </div>
-    </div>
+
+        <!-- 4. Κόκκινη Εκκλησία -->
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span class="acc-btn-label">⛪ Κόκκινη Εκκλησία</span>
+          <span class="acc-btn-icon">▼</span>
+        </button>
+        <div class="acc-body">
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.85;margin-bottom:.8rem;">Ένα από τα <strong style="color:var(--cu-l);">πιο χαρακτηριστικά κτίρια</strong> της Φλώρινας — η κόκκινη εκκλησία ξεχωρίζει για την ιδιαίτερη αρχιτεκτονική της και αποτελεί σημείο αναφοράς στην παλιά πόλη.</p>
+          <div class="stop-fact"><div class="sf-label">Fun Fact</div><p class="sf-text">Οι κόκκινες εκκλησίες της Δυτικής Μακεδονίας χτίστηκαν συνήθως από <strong>τοπικό κόκκινο τούβλο</strong> κατά την Οθωμανική περίοδο — το χρώμα δεν ήταν επιλογή αισθητικής αλλά διαθεσιμότητας υλικών.</p></div>
+          <div class="stop-gallery-grid g2" data-gallery="florina-church" style="margin-top:1rem;max-width:400px;">
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288928340_28d5eca43c_b.jpg" alt="Κόκκινη Εκκλησία Φλώρινας"><div class="sg-ov"></div></div>
+          </div>
+        </div>
+
+        <!-- 5. Μουσείο Σύγχρονης Τέχνης -->
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span class="acc-btn-label">🖼️ Μουσείο Σύγχρονης Τέχνης</span>
+          <span class="acc-btn-icon">▼</span>
+        </button>
+        <div class="acc-body">
+          <div style="background:rgba(184,115,51,.08);border:1px dashed rgba(184,115,51,.4);padding:.7rem 1rem;margin-bottom:1rem;font-size:.88rem;color:var(--cu-l);">⚠️ <strong>Προσωρινά κλειστό λόγω εργασιών</strong> — <a href="https://www.mstf.gr" target="_blank" style="color:var(--cu);">mstf.gr</a></div>
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.85;margin-bottom:.8rem;">Το Μουσείο Σύγχρονης Τέχνης Φλώρινας ήταν ένα από τα σημεία που θέλαμε να επισκεφθούμε. Δυστυχώς, την περίοδο της επίσκεψής μας ο χώρος ήταν <strong style="color:var(--cu-l);">προσωρινά κλειστός</strong>.</p>
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.85;margin-bottom:.8rem;">Αξίζει να ρίξετε μια ματιά στην <a href="https://www.mstf.gr" target="_blank" style="color:var(--cu);">ιστοσελίδα του μουσείου</a> — ιδιαίτερα προσεγμένη, με 700+ έργα Ελλήνων και ξένων καλλιτεχνών.</p>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:#fff;line-height:1.75;border-left:2px solid var(--cu);padding-left:1.2rem;margin:1rem 0;">«Σε μια πόλη που το φως ενέπνευσε γενιές ζωγράφων, η τέχνη μοιάζει να υπάρχει παντού — ακόμη κι όταν οι πόρτες ενός μουσείου παραμένουν κλειστές.»</div>
+          <div class="stop-details">
+            <div class="stop-detail"><span class="sd-icon">📍</span><div><div class="sd-label">Διεύθυνση</div><div class="sd-val">Ταγμ. Φουλεδάκη 8, 531 00 Φλώρινα</div></div></div>
+            <div class="stop-detail"><span class="sd-icon">📞</span><div><div class="sd-label">Επικοινωνία</div><div class="sd-val"><a href="tel:+302385029444">23850 29444</a> · <a href="mailto:info@mstf.gr">info@mstf.gr</a> · <a href="https://www.mstf.gr" target="_blank">mstf.gr</a></div></div></div>
+          </div>
+        </div>
+
+        <!-- 6. Αριστοτέλης -->
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span class="acc-btn-label">🎭 Φιλεκπαιδευτικός Σύλλογος «Αριστοτέλης»</span>
+          <span class="acc-btn-icon">▼</span>
+        </button>
+        <div class="acc-body">
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.75;margin-bottom:.8rem;">Ιδρύθηκε τον <strong style="color:var(--cu-l);">Ιούνιο του 1941</strong> από νέους που πολέμησαν στην Αλβανία — έγινε ο πρώτος πυρήνας εθνικής αντίστασης εναντίον του βουλγαρικού επεκτατισμού, με κύριο όπλο τον πολιτισμό: τραγούδι, χορό, εικαστικά.</p>
+          <div class="stop-fact"><div class="sf-label">Fun Fact</div><p class="sf-text">Η δράση του Αριστοτέλη εξόργισε τα γερμανικά και βουλγαρικά στρατεύματα — <strong>πολλά μέλη του συλλόγου πλήρωσαν με τη ζωή τους</strong> την αντίστασή τους. Σήμερα συνεχίζει αδιάλειπτα για 80+ χρόνια.</p></div>
+          <div class="stop-gallery-grid g2" data-gallery="florina-aristoteles" style="margin-top:1rem;max-width:400px;">
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288761894_ca69febf27_b.jpg" alt="Σύλλογος Αριστοτέλης"><div class="sg-ov"></div></div>
+          </div>
+        </div>
+
+        <!-- 7. Florian -->
+        <button class="acc-btn" onclick="toggleAcc(this)">
+          <span class="acc-btn-label">☕ Florian Sweets & Coffee</span>
+          <span class="acc-btn-icon">▼</span>
+        </button>
+        <div class="acc-body">
+          <p style="font-size:.9rem;color:var(--cr-d);line-height:1.85;margin-bottom:.8rem;">Σε ένα <strong style="color:var(--cu-l);">αρχοντικό δίπλα στον Σακουλέβα</strong>, με διακόσμηση που συνδυάζει ξύλο και σύγχρονες πινελιές. Χειροποίητα γλυκά, ροφήματα και ατμόσφαιρα που σε κρατά.</p>
+          <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:#fff;line-height:1.75;border-left:2px solid var(--cu);padding-left:1.2rem;margin:.8rem 0;">«Ζεστασιά, κομψότητα, ποιότητα — ένας χώρος αγάπη και φιλοξενία.»</div>
+          <div class="stop-details">
+            <div class="stop-detail"><span class="sd-icon">📞</span><div><div class="sd-label">Τηλέφωνο & Instagram</div><div class="sd-val"><a href="tel:+302385026522">2385 026522</a> · <a href="https://www.instagram.com/florian_sweets_and_coffee/" target="_blank">@florian_sweets_and_coffee</a></div></div></div>
+            <div class="stop-detail"><span class="sd-icon">🍰</span><div><div class="sd-label">Specialty</div><div class="sd-val">Χειροποίητα γλυκά · Brunch · Καφές με θέα στο ποτάμι</div></div></div>
+          </div>
+          <div class="stop-gallery-grid g2" data-gallery="florina-cafe" style="margin-top:1rem;">
+            <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288932325_d1f576b676_b.jpg" alt="Florian Φλώρινα"><div class="sg-ov"></div></div>
+            <div class="sg-item"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/26/6a/45/caption.jpg?w=1200&h=1200&s=1" alt="Florian Γλυκά"><div class="sg-ov"></div></div>
+          </div>
+        </div>
+
+      </div><!-- end accordion -->
+    </div><!-- end reveal -->
   </div>
 </div>
 
@@ -496,6 +721,10 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
         <div class="stop-tag" style="margin-bottom:.4rem;">Διανυκτέρευση · Βεύη</div>
         <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#fff;margin-bottom:.5rem;">Suite Rooms Fine Living VEVI</h3>
         <p style="font-size:.9rem;color:var(--cr-d);line-height:1.7;margin-bottom:.8rem;">Βαθμολογία Booking: <strong style="color:var(--cu-l);">9,9/10</strong> · Parking · Μπαλκόνι · Βεράντα · Κλιματισμός · Μπάνιο</p>
+        <p style="font-size:.88rem;color:var(--cr-d);line-height:1.7;margin-bottom:.8rem;font-style:italic;">Από τη Βεύη φαίνεται στο βάθος η Φλώρινα — ένα από εκείνα τα τοπία που δεν σου ζητούν τίποτα, απλώς σε αφήνουν να κοιτάς.</p>
+        <div style="margin-bottom:.8rem;">
+          <img src="https://live.staticflickr.com/65535/55288672088_97b85a1521_b.jpg" alt="Βεύη με θέα Φλώρινα" style="width:100%;max-height:200px;object-fit:cover;display:block;filter:brightness(.85);">
+        </div>
         <div style="display:flex;gap:1.5rem;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.15em;color:var(--cu-d);text-transform:uppercase;">
           <span>Check-in: Παρ. 1/5</span>
           <span>Check-out: Σαβ. 2/5</span>
@@ -506,62 +735,14 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
   </div>
 </div>
 
-<!-- 6. ΑΓΙΟΣ ΑΧΙΛΛΕΙΟΣ -->
-<div class="stop-section reverse" id="stop-prespa">
-  <div class="stop-inner">
-    <div class="stop-media dual">
-      <div class="stop-photo">
-        <img data-img="prespa1" src="" alt="Άγιος Αχίλλειος πλωτή γέφυρα">
-        <div class="stop-day-badge">Ημέρα 2 · Σαβ. 2 Μαΐου</div>
-        <div class="stop-time-badge">~09:45 πμ</div>
-      </div>
-      <div class="stop-phone-col">
-        <div class="stop-phone">
-          <div class="sw" data-short="achilleios1"><div class="sph"><div class="phi">▶</div><div class="pht">Πλωτή Γέφυρα</div></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="stop-info reveal">
-      <div class="stop-num">05</div>
-      <div class="stop-tag">Αγκίστρι · Μικρή Πρέσπα</div>
-      <h2 class="stop-title">Άγιος Αχίλλειος —<br><em>το νησί στη λίμνη</em></h2>
-      <p class="stop-desc"><strong>650 μέτρα πλωτής γέφυρας</strong> πάνω ακριβώς στο νερό οδηγούν σε ένα νησί με 21 κατοίκους, 0 αυτοκίνητα και βυζαντινές εκκλησίες 10ου αιώνα. Ένα από τα δύο μοναδικά κατοικημένα νησιά σε λίμνη στην Ελλάδα.</p>
-      <div class="stop-pills">
-        <span class="pill cu">Ελεύθερη είσοδος</span>
-        <span class="pill">Πλωτή γέφυρα 650μ.</span>
-        <span class="pill">5 βυζαντινές εκκλησίες</span>
-        <span class="pill">Υψ. 856μ.</span>
-      </div>
-      <div class="stop-details">
-        <div class="stop-detail">
-          <span class="sd-icon">📍</span>
-          <div><div class="sd-label">Πρόσβαση</div><div class="sd-val">Από Βεύη: ~45χλμ. μέσω Αγ. Γερμανού → Αγκίστρι. Parking δωρεάν στη γέφυρα.</div></div>
-        </div>
-        <div class="stop-detail">
-          <span class="sd-icon">⛪</span>
-          <div><div class="sd-label">Βυζαντινή Βασιλική</div><div class="sd-val">Χτίστηκε 983–986 μ.Χ. από τον Τσάρο Σαμουήλ · Στο δεξί κλίτος εικάζεται ο τάφος του</div></div>
-        </div>
-        <div class="stop-detail">
-          <span class="sd-icon">⏱️</span>
-          <div><div class="sd-label">Χρόνος επίσκεψης</div><div class="sd-val">~1,5 ώρα για γέφυρα + νησί + βασιλική · Πρωινό στον Αγ. Γερμανό (15χλμ. πριν)</div></div>
-        </div>
-      </div>
-      <div class="stop-fact">
-        <div class="sf-label">Fun Fact</div>
-        <p class="sf-text">Στο νησί υπήρχε παλαιότερα κι άλλη εκκλησία — <strong>ένας θρύλος λέει ότι αν χτιστεί νέα, θα πέσει η παλιά</strong>. Έτσι οι κάτοικοι δεν χτίζουν. Υπάρχουν σήμερα 5 εκκλησίες σε διάφορα στάδια ερείπωσης.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 7. ΨΑΡΑΔΕΣ + ΒΑΡΚΑΔΑ -->
-<div class="stop-section" id="stop-psarades">
+<!-- 6. ΨΑΡΑΔΕΣ + ΒΑΡΚΑΔΑ -->
+<div class="stop-section reverse" id="stop-psarades">
   <div class="stop-inner">
     <div class="stop-media dual">
       <div class="stop-photo">
         <img data-img="psarades" src="" alt="Ψαράδες Μεγάλη Πρέσπα">
         <div class="stop-day-badge">Ημέρα 2 · Σαβ. 2 Μαΐου</div>
-        <div class="stop-time-badge">~10:45 πμ</div>
+        <div class="stop-time-badge">~09:00 πμ · Βαρκάδα ✓</div>
       </div>
       <div class="stop-phone-col">
         <div class="stop-phone">
@@ -571,9 +752,9 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
     </div>
     <div class="stop-info reveal">
       <div class="stop-num">06</div>
-      <div class="stop-tag">Ψαράδες · Μεγάλη Πρέσπα</div>
+      <div class="stop-tag">Ψαράδες · Μεγάλη Πρέσπα · Πρώτη στάση</div>
       <h2 class="stop-title">Ψαράδες &<br><em>Βαρκάδα στα Ασκηταριά</em></h2>
-      <p class="stop-desc">Το πιο απομακρυσμένο χωριό της Ελλάδας τον χειμώνα. <strong>Αλιευτικό, αυθεντικό, ανέγγιχτο</strong>. Από εδώ ξεκινά η βαρκάδα στα βυζαντινά ερημητήρια, τις βραχογραφίες και το τριεθνές σημείο Ελλάδας–Αλβανίας–Β. Μακεδονίας.</p>
+      <p class="stop-desc">Πρώτη στάση στις Πρέσπες — εδώ μας περίμενε η βαρκάδα. Το πιο απομακρυσμένο χωριό της Ελλάδας τον χειμώνα. <strong>Αλιευτικό, αυθεντικό, ανέγγιχτο</strong>. Από εδώ ξεκινά η βαρκάδα στα βυζαντινά ερημητήρια, τις βραχογραφίες και το τριεθνές σημείο Ελλάδας–Αλβανίας–Β. Μακεδονίας.</p>
       <div class="stop-pills">
         <span class="pill cu">Βαρκάδα 25€/άτομο (4+ άτ.)</span>
         <span class="pill">100€ min (1–4 άτ.)</span>
@@ -598,6 +779,110 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
         <div class="sf-label">Fun Fact</div>
         <p class="sf-text">Η Μεγάλη Πρέσπα ανήκει κατά <strong>60% στη Βόρεια Μακεδονία</strong>, κατά 27% στην Ελλάδα και κατά 13% στην Αλβανία — από τις λίγες λίμνες στον κόσμο που μοιράζονται σε τρεις χώρες ταυτόχρονα.</p>
       </div>
+
+      <!-- Φωτό Ψαράδες -->
+      <div style="margin-top:1.5rem;border-top:1px solid rgba(184,115,51,.15);padding-top:1.2rem;">
+        <div class="stop-tag" style="margin-bottom:.6rem;">📍 Ψαράδες — το χωριό</div>
+      </div>
+      <div class="stop-gallery">
+        <div class="stop-gallery-label">Ψαράδες</div>
+        <div class="stop-gallery-grid" data-gallery="psarades-village">
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288763264_64cc2852c8_b.jpg" alt="Ψαράδες"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288534931_0d9d26fd7c_b.jpg" alt="Ψαράδες"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288534936_037fff4133_b.jpg" alt="Ψαράδες"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288542031_3ddd246573_b.jpg" alt="Ψαράδες"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288542026_66d5e8c7d0_b.jpg" alt="Ψαράδες"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288684553_ca206072d6_b.jpg" alt="Ψαράδες"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288940740_503cfb74db_b.jpg" alt="Ψαράδες"><div class="sg-ov"></div></div>
+        </div>
+      </div>
+
+      <!-- Φωτό Βαρκάδα -->
+      <div style="margin-top:1.5rem;border-top:1px solid rgba(184,115,51,.15);padding-top:1.2rem;">
+        <div class="stop-tag" style="margin-bottom:.6rem;">⛵ Η Βαρκάδα — ερημητήρια & τριεθνές</div>
+      </div>
+      <div class="stop-gallery">
+        <div class="stop-gallery-label">Βαρκάδα στη Μεγάλη Πρέσπα</div>
+        <div class="stop-gallery-grid" data-gallery="psarades-boat">
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288763519_6cda7c696a_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288677508_8f0daeedbb_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287619042_f7f36930c9_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288535156_e4b25a07ac_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288763474_bc6759a01f_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288535166_8f6d896370_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287619022_9a5eed7702_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287618997_8486518eca_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288677403_dff9b2e459_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288677398_b1b1ca44c3_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287618917_7eb04ef6b1_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288763339_8605ffde4c_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288933835_9950264813_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55287618867_5bfc1e1ae7_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288535276_9643b9c491_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288763534_c0ffe3bb1c_b.jpg" alt="Βαρκάδα"><div class="sg-ov"></div></div>
+        </div>
+      </div>
+
+      <!-- Φωτό Εκκλησία -->
+      <div style="margin-top:1.5rem;border-top:1px solid rgba(184,115,51,.15);padding-top:1.2rem;">
+        <div class="stop-tag" style="margin-bottom:.6rem;">⛪ Βυζαντινή Εκκλησία</div>
+      </div>
+      <div class="stop-gallery">
+        <div class="stop-gallery-label">Εκκλησία στις Πρέσπες</div>
+        <div class="stop-gallery-grid g2" data-gallery="psarades-church">
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288770439_20de6a2f05_b.jpg" alt="Εκκλησία Πρέσπες"><div class="sg-ov"></div></div>
+          <div class="sg-item"><img src="https://live.staticflickr.com/65535/55288684783_d1afc2a588_b.jpg" alt="Εκκλησία Πρέσπες"><div class="sg-ov"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 7. ΑΓΙΟΣ ΑΧΙΛΛΕΙΟΣ -->
+<div class="stop-section" id="stop-prespa">
+  <div class="stop-inner">
+    <div class="stop-media dual">
+      <div class="stop-photo">
+        <img data-img="prespa1" src="" alt="Άγιος Αχίλλειος πλωτή γέφυρα">
+        <div class="stop-day-badge">Ημέρα 2 · Σαβ. 2 Μαΐου</div>
+        <div class="stop-time-badge">~11:00 πμ</div>
+      </div>
+      <div class="stop-phone-col">
+        <div class="stop-phone">
+          <div class="sw" data-short="achilleios1"><div class="sph"><div class="phi">▶</div><div class="pht">Πλωτή Γέφυρα</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stop-info reveal">
+      <div class="stop-num">07</div>
+      <div class="stop-tag">Αγκίστρι · Μικρή Πρέσπα</div>
+      <h2 class="stop-title">Άγιος Αχίλλειος —<br><em>το νησί στη λίμνη</em></h2>
+      <p class="stop-desc"><strong>650 μέτρα πλωτής γέφυρας</strong> πάνω ακριβώς στο νερό οδηγούν σε ένα νησί με 21 κατοίκους, 0 αυτοκίνητα και βυζαντινές εκκλησίες 10ου αιώνα. Ένα από τα δύο μοναδικά κατοικημένα νησιά σε λίμνη στην Ελλάδα.</p>
+      <div class="stop-pills">
+        <span class="pill cu">Ελεύθερη είσοδος</span>
+        <span class="pill">Πλωτή γέφυρα 650μ.</span>
+        <span class="pill">5 βυζαντινές εκκλησίες</span>
+        <span class="pill">Υψ. 856μ.</span>
+      </div>
+      <div class="stop-details">
+        <div class="stop-detail">
+          <span class="sd-icon">📍</span>
+          <div><div class="sd-label">Πρόσβαση</div><div class="sd-val">Από Ψαράδες: ~20χλμ. μέσω Αγκίστρι. Parking δωρεάν στη γέφυρα.</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">⛪</span>
+          <div><div class="sd-label">Βυζαντινή Βασιλική</div><div class="sd-val">Χτίστηκε 983–986 μ.Χ. από τον Τσάρο Σαμουήλ · Στο δεξί κλίτος εικάζεται ο τάφος του</div></div>
+        </div>
+        <div class="stop-detail">
+          <span class="sd-icon">⏱️</span>
+          <div><div class="sd-label">Χρόνος επίσκεψης</div><div class="sd-val">~1,5 ώρα για γέφυρα + νησί + βασιλική</div></div>
+        </div>
+      </div>
+      <div class="stop-fact">
+        <div class="sf-label">Fun Fact</div>
+        <p class="sf-text">Στο νησί υπήρχε παλαιότερα κι άλλη εκκλησία — <strong>ένας θρύλος λέει ότι αν χτιστεί νέα, θα πέσει η παλιά</strong>. Έτσι οι κάτοικοι δεν χτίζουν. Υπάρχουν σήμερα 5 εκκλησίες σε διάφορα στάδια ερείπωσης.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -611,7 +896,7 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
       <div class="stop-time-badge">15:30 μμ · Κράτηση ✓</div>
     </div>
     <div class="stop-info reveal">
-      <div class="stop-num">07</div>
+      <div class="stop-num">08</div>
       <div class="stop-tag">Άγιος Παντελεήμονας · Πέλλα</div>
       <h2 class="stop-title">Ταβέρνα <em>Ναουμίδης</em><br>— θέα Βεγορίτιδα</h2>
       <p class="stop-desc">Με <strong>θέα στη λίμνη Βεγορίτιδα</strong>, καπνιστά, χειροποίητα λουκάνικα και τοπικά προϊόντα. 4.5★ με 2.600+ κριτικές — μια ταβέρνα που συνδυάζει το τοπίο με τη γεύση.</p>
@@ -683,24 +968,6 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
   </div>
 </div>
 
-<!-- GALLERY -->
-<section id="gallery" style="padding:0;">
-  <div class="gallery-header reveal">
-    <p class="sl">Gallery</p>
-    <h2 class="st">Φωτογραφίες<br><em>από την εκδρομή</em></h2>
-  </div>
-  <div class="gallery-mosaic">
-    <div class="gitem"><img data-img="g1" src="" alt="" loading="lazy"><div class="gio"></div></div>
-    <div class="gitem"><img data-img="g2" src="" alt="" loading="lazy"><div class="gio"></div></div>
-    <div class="gitem"><img data-img="g3" src="" alt="" loading="lazy"><div class="gio"></div></div>
-    <div class="gitem"><img data-img="g4" src="" alt="" loading="lazy"><div class="gio"></div></div>
-    <div class="gitem"><img data-img="g5" src="" alt="" loading="lazy"><div class="gio"></div></div>
-    <div class="gitem"><img data-img="g6" src="" alt="" loading="lazy"><div class="gio"></div></div>
-    <div class="gitem"><img data-img="g7" src="" alt="" loading="lazy"><div class="gio"></div></div>
-    <div class="gitem"><img data-img="g8" src="" alt="" loading="lazy"><div class="gio"></div></div>
-    <div class="gitem"><img data-img="g9" src="" alt="" loading="lazy"><div class="gio"></div></div>
-  </div>
-</section>
 
 <footer>
   <div class="footer-logo">Πρωτομαγιά 2025 · Δυτική Μακεδονία</div>
@@ -716,13 +983,30 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
 </div>
 
 <script>
+// Accordion
+function toggleAcc(btn){
+  btn.classList.toggle('open');
+  const body=btn.nextElementSibling;
+  body.classList.toggle('open');
+}
+// Close modals with Escape
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') document.querySelectorAll('.modal-overlay.active').forEach(m=>m.classList.remove('active'));
+});
 const nb=document.getElementById('navbar');
 window.addEventListener('scroll',()=>nb.classList.toggle('scrolled',scrollY>60));
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}});},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 const sObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const el=x.target,raw=el.textContent.trim(),num=parseInt(raw.replace(/\D/g,'')),suf=raw.replace(/\d/g,'');if(!isNaN(num)){let s=0;const step=ts=>{if(!s)s=ts;const p=Math.min((ts-s)/1200,1),ea=1-Math.pow(1-p,3);el.textContent=Math.floor(ea*num)+suf;if(p<1)requestAnimationFrame(step);};requestAnimationFrame(step);}sObs.unobserve(el);}});},{threshold:.5});
 document.querySelectorAll('.stat-num').forEach(s=>sObs.observe(s));
-(function(){let imgs=[],idx=0;function open(i){idx=i;const lb=document.getElementById('lightbox'),im=document.getElementById('lightbox-img'),co=document.getElementById('lightbox-counter');im.src=imgs[idx].src;co.textContent=(idx+1)+' / '+imgs.length;lb.classList.add('active');document.body.style.overflow='hidden';}function close(){document.getElementById('lightbox').classList.remove('active');document.body.style.overflow='';}document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{imgs=Array.from(document.querySelectorAll('#gallery .gitem img'));imgs.forEach((im,i)=>im.closest('.gitem').addEventListener('click',()=>open(i)));},600);document.getElementById('lightbox-close').addEventListener('click',close);document.getElementById('lightbox-prev').addEventListener('click',e=>{e.stopPropagation();idx=(idx-1+imgs.length)%imgs.length;open(idx);});document.getElementById('lightbox-next').addEventListener('click',e=>{e.stopPropagation();idx=(idx+1)%imgs.length;open(idx);});document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)close();});document.addEventListener('keydown',e=>{if(!document.getElementById('lightbox').classList.contains('active'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft'){idx=(idx-1+imgs.length)%imgs.length;open(idx);}if(e.key==='ArrowRight'){idx=(idx+1)%imgs.length;open(idx);}});});})();
+(function(){let imgs=[],idx=0;function open(i){idx=i;const lb=document.getElementById('lightbox'),im=document.getElementById('lightbox-img'),co=document.getElementById('lightbox-counter');im.src=imgs[idx].src;co.textContent=(idx+1)+' / '+imgs.length;lb.classList.add('active');document.body.style.overflow='hidden';}function close(){document.getElementById('lightbox').classList.remove('active');document.body.style.overflow='';}document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{
+  const galleryImgs=Array.from(document.querySelectorAll('#gallery .gitem img'));
+  galleryImgs.forEach((im,i)=>im.closest('.gitem').addEventListener('click',()=>{imgs=galleryImgs;open(i);}));
+  document.querySelectorAll('[data-gallery]').forEach(grid=>{
+    const gridImgs=Array.from(grid.querySelectorAll('.sg-item img'));
+    gridImgs.forEach((im,i)=>im.closest('.sg-item').addEventListener('click',()=>{imgs=gridImgs;open(i);}));
+  });
+},600);document.getElementById('lightbox-close').addEventListener('click',close);document.getElementById('lightbox-prev').addEventListener('click',e=>{e.stopPropagation();idx=(idx-1+imgs.length)%imgs.length;open(idx);});document.getElementById('lightbox-next').addEventListener('click',e=>{e.stopPropagation();idx=(idx+1)%imgs.length;open(idx);});document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)close();});document.addEventListener('keydown',e=>{if(!document.getElementById('lightbox').classList.contains('active'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft'){idx=(idx-1+imgs.length)%imgs.length;open(idx);}if(e.key==='ArrowRight'){idx=(idx+1)%imgs.length;open(idx);}});});})();
 </script>
 </body>
 </html>
