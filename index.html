@@ -578,33 +578,26 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
   </div>
 </div>
 
-<!-- 4. ΦΛΩΡΙΝΑ — full width -->
-<div class="stop-section" id="stop-florina" style="padding:0;">
-
-  <!-- Επάνω: φωτό + βίντεο σε grid -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;min-height:380px;">
-    <div style="position:relative;overflow:hidden;">
-      <img data-img="florina" src="" alt="Φλώρινα Σακουλέβας" style="width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.82);">
-      <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
-      <div class="stop-time-badge">~17:00 μμ</div>
-    </div>
-    <div style="background:var(--ink);display:flex;align-items:stretch;">
-      <div class="stop-phone" style="width:100%;border-radius:0;aspect-ratio:unset;height:100%;">
-        <div class="sw" data-short="florina1"><div class="sph"><div class="phi">▶</div><div class="pht">Σακουλέβας</div></div></div>
+<!-- 4. ΦΛΩΡΙΝΑ -->
+<div class="stop-section reverse" id="stop-florina" style="padding:0;">
+  <div class="stop-inner">
+    <div class="stop-media dual">
+      <div class="stop-photo">
+        <img data-img="florina" src="" alt="Φλώρινα Σακουλέβας">
+        <div class="stop-day-badge">Ημέρα 1 · Παρ. 1 Μαΐου</div>
+        <div class="stop-time-badge">~17:00 μμ</div>
+      </div>
+      <div class="stop-phone-col">
+        <div class="stop-phone">
+          <div class="sw" data-short="florina1"><div class="sph"><div class="phi">▶</div><div class="pht">Σακουλέβας</div></div></div>
+        </div>
       </div>
     </div>
-  </div>
-  @media(max-width:700px){
-    #stop-florina > div:first-child { grid-template-columns:1fr; }
-  }
-
-  <!-- Κάτω: full-width περιεχόμενο -->
-  <div style="max-width:1100px;margin:0 auto;padding:3rem 2rem;">
-    <div class="reveal">
+    <div class="stop-info reveal">
       <div class="stop-num">04</div>
       <div class="stop-tag">Φλώρινα · Παλιά Πόλη</div>
       <h2 class="stop-title">Φλώρινα —<br><em>η πόλη των ζωγράφων</em></h2>
-      <p class="stop-desc" style="max-width:700px;">Νεοκλασικά αρχοντικά, <strong>παραποτάμιος δρόμος Σακουλέβα</strong>, εργαστήρια ζωγράφων, Μουσείο Σύγχρονης Τέχνης με 700+ έργα. Μια πόλη που ανακαλύπτεις ότι έπρεπε να έχεις επισκεφθεί χρόνια πριν.</p>
+      <p class="stop-desc">Νεοκλασικά αρχοντικά, <strong>παραποτάμιος δρόμος Σακουλέβα</strong>, εργαστήρια ζωγράφων, Μουσείο Σύγχρονης Τέχνης με 700+ έργα. Μια πόλη που ανακαλύπτεις ότι έπρεπε να έχεις επισκεφθεί χρόνια πριν.</p>
       <div class="stop-pills">
         <span class="pill cu">Ελεύθερη βόλτα</span>
         <span class="pill">Πεζόδρομος Μελά</span>
@@ -724,9 +717,9 @@ footer{background:var(--ink-s);border-top:1px solid rgba(184,115,51,.15);padding
         </div>
 
       </div><!-- end accordion -->
-    </div><!-- end reveal -->
-  </div>
-</div>
+    </div><!-- end stop-info -->
+  </div><!-- end stop-inner -->
+</div><!-- end stop-florina -->
 
 <!-- 5. ΒΕΥΗ - Διανυκτέρευση -->
 <div class="stop-section" id="stop-vevi" style="padding:3rem 0;">
